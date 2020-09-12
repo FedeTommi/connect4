@@ -1,0 +1,129 @@
+:root {
+    --tiffany: #30cfcf;
+    --tiffany-hover: #28a4a4;
+    --tiffany-extra-dark: #1D7775;
+    --p1-color: #ee2c2c;
+    --p2-color: #FFD966;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: -webkit-radial-gradient(50% 50%, circle, black 20%, blue 75%);
+    background: #eee;
+}
+
+.logo {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.grid {
+    display: flex;
+    margin: 0 5px;
+    position: relative;
+}
+
+.grid::before, .grid::after{
+    width: 5px;
+    background-color: var(--tiffany);
+    content: " ";
+    display: block;
+    /* height: 100%; */
+    top: 0;
+    bottom: 0;
+    position: absolute;
+}
+
+.grid::before {
+    left: -5px;
+}
+
+.grid::after {
+    right: -5px;
+}
+
+.column {
+    cursor: pointer;
+    border-top: var(--tiffany) 5px solid;
+    border-bottom: var(--tiffany) 5px solid;
+}
+
+.column:hover {
+    border-top: var(--tiffany-hover) 5px solid;
+    border-bottom: var(--tiffany-hover) 5px solid;
+}
+
+.column:hover .cell {
+    background: -webkit-radial-gradient(50% 50%, circle, transparent 57%, var(--tiffany-hover) 57%);
+    
+}
+
+.cell {
+    height: 50px;
+    width: 50px;
+    background: -webkit-radial-gradient(50% 50%, circle, transparent 57%, var(--tiffany) 57%);
+    position: relative;
+}
+
+.token {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border-radius: 50%;
+    position: absolute;
+    z-index: -1;
+    transition: transform 0.75s ease-in;
+    transform: translateY(0);
+}
+
+.token.checked {
+    transform: translateY(0);
+}
+
+.token.yellow,
+.player-2-color {
+    background-color: var(--p2-color);
+}
+
+.token.red,
+.player-1-color {
+    background-color: var(--p1-color);
+}
+
+.turn-indicator-box {
+    display: flex;
+    margin-top: 10px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+}
+
+.turn-indicator-side {
+    display: flex;
+    align-items: center;
+}
+
+.turn-indicator-token {
+    padding: 10px;
+    border-radius: 50%;
+    color: white;
+    font-family: Roboto;
+    font-weight: 500;
+}
+
+.turn-indicator-box span {
+    color: #222222;
+    font-family: Roboto;
+    font-weight: 400;
+    margin: 10px;
+}
