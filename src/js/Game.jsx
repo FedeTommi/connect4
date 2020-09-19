@@ -21,27 +21,79 @@ class Game extends React.Component {
     }
 
     handleClick(x) {
-        return function(event) {
+        return function() {
             const y = this.state.grid[x].indexOf(null)
+
+            const player = PLAYERS[this.state.turnCounter % 2]
 
             // Ignore if column already full
             // Bail early, don't count as turn
             if (y === -1) return
 
             const grid = this.state.grid
-            console.log({ x, y })
-            grid[x][y] = COLORS[this.state.turnCounter % 2]
+            grid[x][y] = player
             
             this.setState({
                 turnCounter: this.state.turnCounter + 1,
                 grid,
             })
             
+            this.checkWinCondition(player, x, y)
+
         }.bind(this)
     }
 
+    checkWinCondition(player, x, y) {
+        const getRightBoundary = (array, startPoint) => {
+            for (let i = startPoint; i < array.length; i++) {
+                if (array[i] !== array[startPoint]) return i - 1
+            }
+            return array.length - 1
+        }
+
+        const getLeftBoundary = (array, startPoint) => {
+            for (let i = startPoint; i >= 0; i--) {
+                if (array[i] !== array[startPoint]) return i + 1
+            }
+            return 0
+        }
+
+        const getBoundariesForVector = (vector, startIndex) => {
+            const rightBoundary = getRightBoundary(vector, startIndex)
+            const leftBoundary = getLeftBoundary(vector, startIndex)
+            const length = rightBoundary - leftBoundary + 1
+
+            return { rightBoundary, leftBoundary, length }
+        }
+
+        const column = this.state.grid[x]
+        const columnBoundaries = getBoundariesForVector(column, y)
+        console.log(column, columnBoundaries)
+
+        const row = this.state.grid.map(column => column[y])
+        const rowBoundaries = getBoundariesForVector(row, x)
+        
+        // Diagonal that looks like a '/'
+        const diagonalForwardSlash = this.state.grid
+            .map((column, i) => column[y - x + i])
+        const diagonalForwardSlashBoundaries =
+            getBoundariesForVector(diagonalForwardSlash, x)
+            
+        // Diagonal that looks like a '\'
+        const diagonalBackSlash = this.state.grid
+            .map((column, i) => column[y + x - i])
+        const diagonalBackSlashBoundaries =
+            getBoundariesForVector(diagonalBackSlash, x)
+
+        if (Math.max(rowBoundaries.length,
+                columnBoundaries.length,
+                diagonalForwardSlashBoundaries.length,
+                diagonalBackSlashBoundaries.length) >= 4) {
+            alert(`${player} won`)
+        }
+    }
+
     render() {
-        console.log(this.state)
         return <GameBoard state={this.state.grid} onClick={this.handleClick} />
     }
 }
