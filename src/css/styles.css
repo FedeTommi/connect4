@@ -92,12 +92,12 @@ body {
     transform: translateY(0);
 }
 
-.token.yellow,
+.token.P2,
 .player-2-color {
     background-color: var(--p2-color);
 }
 
-.token.red,
+.token.P1,
 .player-1-color {
     background-color: var(--p1-color);
 }
