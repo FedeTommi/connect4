@@ -2,17 +2,11 @@ const path = require('path')
 const process = require("process")
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
-const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: './src/js/main.jsx',
   mode: process.env.NODE_ENV || "development",
   plugins: [
-    new CopyPlugin({
-      patterns: [
-        { from: 'src/css', to: 'dist' },
-      ],
-    }),
     new HtmlWebpackPlugin({ template: "./index.html" }),
     new FaviconsWebpackPlugin("./src/svg/favicon.svg"),
   ],

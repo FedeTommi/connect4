@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import ReactDOM from 'react-dom'
 import SVG from 'react-inlinesvg'
 
+import '!file-loader?name=styles.css!../css/styles.css'
 import Game from "./Game"
 import hourglass from "svg-inline-loader!../svg/hourglass.svg" 
 import yellowTokenSmiley from "svg-inline-loader!../svg/yellow-token-smiley-^o^.svg"
