@@ -1,6 +1,7 @@
 module.exports = {
     "env": {
         "browser": true,
+        "node": true,
         "es2020": true
     },
     "extends": [
@@ -18,5 +19,6 @@ module.exports = {
         "react"
     ],
     "rules": {
+        "no-constant-condition": ["off"]
     }
 };
