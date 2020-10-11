@@ -5,7 +5,6 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="143.5177"
@@ -13,9 +12,33 @@
    overflow="hidden"
    version="1.1"
    id="svg4563"
-   sodipodi:docname="yellow-token-smiley-^o^.svg"
+   sodipodi:docname="yellow-token-smiley.svg"
    style="overflow:hidden"
    inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="986"
+     id="namedview43"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="3.6035307"
+     inkscape:cx="70.216847"
+     inkscape:cy="94.972451"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4563" />
   <metadata
      id="metadata4567">
     <rdf:RDF>
@@ -30,58 +53,8 @@
   </metadata>
   <defs
      id="defs4531">
-    <clipPath
-       id="clip0">
-      <path
-         d="M 796,585 H 980 V 778 H 796 Z"
-         id="path4516"
-         inkscape:connector-curvature="0"
-         style="clip-rule:evenodd;fill-rule:evenodd" />
-    </clipPath>
-    <image
-       width="140"
-       height="149"
-       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIwAAACVCAMAAAC9x+JfAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEgUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAN6KfdoAAABgdFJOUwABAgMEBQYHCAkKCwwNDg8QERITFBUWFxgaGxwdHh8gISIkJSYnKCkqKywtLzAxMjM0NTY3ODo7PD4/QEFCQ0RFR0hJSktMTU5PUFFSU1RVVldYWVpbXF1eX2BhYmNkZQAah1EAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHQSURBVHhe7dZhW9JQFAdw7t2QueGmk3BKpJARYWgGCVSrTEGaooAL53ZG3/9bJLanp0d70avOXvx/r3afvdh5zv733JsBAAAAAAAAAAAAAAAAgJQRUorkkZvMGquWJpMVL0V3aofNZ6aaguYIfaczHF98rNlL/NUoT47G0Zz8k+YG/69SNo/DH/N5HHxrlXTuahbFxDd+EIejboU7OIrjBuG5e+pTNP30kjk4SvH9LBw0XrmTiL6fNB3W4CjF3iwaVNYr3cswDrx3Tw0lecNAFjo+Dau6UWp7t/Pwqle1+IIj7faUvJqhaM7+4Cam6y/1dbbgyLXDCY32VqRYKjS++hTP+vvOMlNw5OqbMV0dWDIjsms1924A3nrtksbTG2m+vqRpy170QjV3OqO7GA/2TJ7WiHzjgvyjwv3Xpb719mwycnfzTMUY9XOa9Yq/NrTMFeut5ral3q/+O6G/8ChwnWS6iOyKbWlsoyZXOaPoeOt3LyTntU8t94n65Wyy5KWWTikeVpk28wOLOwQNd5fTUczGh+upW86lohhpH3zuPjcZz+o/CH1z28kzDZZHZE5TmQ7GvxCpiAsAAAAAAAAAAAAAAAAAAAAAAAAA/ItM5ic1nTtHHH93rgAAAABJRU5ErkJggg=="
-       preserveAspectRatio="none"
-       id="img1" />
-    <clipPath
-       id="clip2">
-      <path
-         d="M 0,0 H 140 V 149 H 0 Z"
-         id="path4520"
-         inkscape:connector-curvature="0"
-         style="clip-rule:evenodd;fill-rule:evenodd" />
-    </clipPath>
-    <image
-       width="106"
-       height="110"
-       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGoAAABuCAMAAAD4bnazAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAERUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGhfuUwAAABbdFJOUwABAgMEBQYHCAkKCwwNDg8QERITFRYXGBkaGxwdHh8gISIjJCUmJygpKywtLi8wMjM0NTY3ODo8Pj9AQUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVpbXF1eX2BAwHRtAAAACXBIWXMAAA7DAAAOwwHHb6hkAAACMElEQVRoQ+3XW3OaQBQHcHfBRTCiqYkYCSHmpglecmnURIyxJUTQKCLo2u//QarWtrQvfWH7dH5P7jDjmf/ZM7uQAAAAAAAAAAAAwD8ghHa/2EKYT0mSwOPdmhmcTOdLZ5UrXZEJ02iI3ytWH19sx7GejKLEMBgi+Ur73QuCcElDt13OcLsHsUOC0rQ8z/1idgejkM7MiwyjXIgU7h1/9HSjKYpmmFPqd3WRzX5xufoweL9TM4TjiHzSmlCvpSR3D2OFUnp/7t4eCtumYVFtz6hjyCxaiHPNid8pCbuWYancX4SmSn4sY8Up3XAcScHlai4d17MMYpETi9qnkRDkqBMszFL8u4XES2dlHfO75RrO3Lgrp5qOfQg3pb7ZenRrkmpvMXv4FH8H1w1cuRUpkgHv33uL50L8RwZX7C29u1wkA5KqLh2UIj2NCc4/+n9NAdHtlaXGXwrtXbvUvY4ee0ntjbIolSDrKQg6R5HBSJ0PmTQwgbONMXVruV9jgOX6R8BiLNaxjs1w0S//vBGRoD7PP5rRQYkNlg2HztqquP1znCrcjuZ9PcXkHkkqLY9OWicy4Xghqz0Mfdv43c9YIVHv+nRqGppSPG30xr7dOEiyuRzXx96FOaPhaNA1rbE/fa0dsHtt4jLlthvQZRgEnt0632eVaQNLRaPzdei8vXy+Kkg8w0rr/SLyoXZZOSvl02wLbWCOiFKKx8wLbf2v7wMAAAAAAAAAAAAAAP6USHwHFnxJQF0tCVoAAAAASUVORK5CYII="
-       preserveAspectRatio="none"
-       id="img3" />
-    <clipPath
-       id="clip4">
-      <path
-         d="M 0,0 H 106 V 110 H 0 Z"
-         id="path4524"
-         inkscape:connector-curvature="0"
-         style="clip-rule:evenodd;fill-rule:evenodd" />
-    </clipPath>
-    <image
-       width="139"
-       height="149"
-       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIsAAACVCAMAAABfG/kmAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAEaUExURQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACYsPVgAAABedFJOUwABAgMEBQYHCAkKCwwNDg8QERITFBUWFxgZGhscHiAiIyQlJigpKissLS4vMDEyMzQ1Njc4Ozw+P0BBQkNERUZHSElKS0xOT1BRUlNUVVZXWFlaW1xdXl9gYWJjZGWaxb3WAAAACXBIWXMAAA7DAAAOwwHHb6hkAAABzElEQVR4Xu3W7VLaQBQGYHYTYvgQYxSoFKlKjVawILZYWlqbSoEGEpHPcJLe/20UBWZ6AZ05men7/MomP/bM2XcnJwYAAAAAAAAAAAAAAAAA/wshpdg8MhNqwjCSahSqkfrh6fvamRnnL0bohfqD636/yu3IzSs20rjuL8Jg1m0Uk9zFyGxzHP4OQ3/QfJNhDs2qlknoP01pOWqfmxprMdK8HdFj+95b0uRHNa9znpPcv3kkp2Y1B34w761Co2w+MJBG3SPnKlts9OahP7w72eMLjcxUXRpWjES+2pkG9PTNOmALjUhfOuTVDEU7uLgfUzDtXL/iCo1IWb9odGtKoRrlz94yXPQ/HKd5QiOSb/s0aWZXrVB2Sx8dP/TdTydpls4I/bRLs1b+uRMyWah354E/aBzyNCZ+3KHF16OXzeVOrmJ7nv3O4EmMWnwgsovqy0JoZvmmfsZ1ldTX9pJ+lrT1Sqipfb5hRjlqL6hXTmy35xzylHxrFjgXabYC/qLk7qbBsJLh/CluPQ8NNKzuRaIWs+GO7XIqCmckd60vLctc32lmQsuWCtzT5ZbU9HgUwrIWjZ4AAAAAAAAAAAAAAAAAAAAAAAAA/HOx2B905DoD7WKuHAAAAABJRU5ErkJggg=="
-       preserveAspectRatio="none"
-       id="img5" />
-    <clipPath
-       id="clip6">
-      <path
-         d="M 0,0 H 139 V 149 H 0 Z"
-         id="path4528"
-         inkscape:connector-curvature="0"
-         style="clip-rule:evenodd;fill-rule:evenodd" />
-    </clipPath>
     <filter
-       style="color-interpolation-filters:sRGB;"
+       style="color-interpolation-filters:sRGB"
        inkscape:label="Drop Shadow"
        id="filter5501">
       <feFlood
@@ -113,7 +86,7 @@
          id="feComposite5499" />
     </filter>
     <filter
-       style="color-interpolation-filters:sRGB;"
+       style="color-interpolation-filters:sRGB"
        inkscape:label="Drop Shadow"
        id="filter5513">
       <feFlood
@@ -145,7 +118,7 @@
          id="feComposite5511" />
     </filter>
     <filter
-       style="color-interpolation-filters:sRGB;"
+       style="color-interpolation-filters:sRGB"
        inkscape:label="Drop Shadow"
        id="filter5525">
       <feFlood
@@ -178,7 +151,6 @@
     </filter>
   </defs>
   <g
-     clip-path="url(#clip0)"
      transform="translate(-812.64608,-591.76255)"
      id="g4561">
     <path
