@@ -15,6 +15,7 @@ class Game extends React.Component {
         this.state = {
             turnCounter: 0,
             grid: Array.from(Array(NUM_COLUMNS), () => new Array(NUM_ROWS).fill(null)),
+            winSequences: [],
         }
 
         this.handleClick = this.handleClick.bind(this)
@@ -68,22 +69,67 @@ class Game extends React.Component {
 
         const column = this.state.grid[x]
         const columnBoundaries = getBoundariesForVector(column, y)
-        console.log(column, columnBoundaries)
+        
+        if (columnBoundaries.length >= 4) {
+            this.setState({
+                winSequences: [{
+                    length: columnBoundaries.length, 
+                    origin: { x, y: columnBoundaries.leftBoundary },
+                    rotation: 0,
+                }],
+            })
+        }
 
         const row = this.state.grid.map(column => column[y])
         const rowBoundaries = getBoundariesForVector(row, x)
+        
+        if (rowBoundaries.length >= 4) {
+            this.setState({
+                winSequences: [{
+                    length: rowBoundaries.length, 
+                    origin: { y, x: rowBoundaries.leftBoundary },
+                    rotation: Math.PI / 2,
+                }],
+            })
+        }
         
         // Diagonal that looks like a '/'
         const diagonalForwardSlash = this.state.grid
             .map((column, i) => column[y - x + i])
         const diagonalForwardSlashBoundaries =
             getBoundariesForVector(diagonalForwardSlash, x)
+
+        if (diagonalForwardSlashBoundaries.length >= 4) {
+            this.setState({
+                winSequences: [{
+                    length: diagonalForwardSlashBoundaries.length, 
+                    origin: {
+                        x: diagonalForwardSlashBoundaries.leftBoundary,
+                        y: y - x + diagonalForwardSlashBoundaries.leftBoundary,
+                    },
+                    rotation: Math.PI / 4,
+                }],
+            })
+        }
             
         // Diagonal that looks like a '\'
         const diagonalBackSlash = this.state.grid
             .map((column, i) => column[y + x - i])
         const diagonalBackSlashBoundaries =
             getBoundariesForVector(diagonalBackSlash, x)
+
+        if (diagonalBackSlashBoundaries.length >= 4) {
+            this.setState({
+                winSequences: [{
+                    length: diagonalBackSlashBoundaries.length, 
+                    origin: {
+                        x: diagonalBackSlashBoundaries.rightBoundary,
+                        y: y + x - diagonalBackSlashBoundaries.rightBoundary,
+                    },
+                    rotation: -Math.PI / 4,
+                }],
+            })
+        }
 
         if (Math.max(rowBoundaries.length,
                 columnBoundaries.length,
@@ -94,7 +140,11 @@ class Game extends React.Component {
     }
 
     render() {
-        return <GameBoard state={this.state.grid} onClick={this.handleClick} />
+        return <GameBoard
+            grid={this.state.grid}
+            winSequences={this.state.winSequences}
+            onClick={this.handleClick}
+        />
     }
 }
 
