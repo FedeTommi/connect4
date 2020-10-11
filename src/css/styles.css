@@ -115,6 +115,9 @@ body {
     align-items: center;
     justify-content: space-between;
     background-color: white;
+    box-shadow: 0px 1px 2px #0006; 
+    border-radius: 5px;
+    padding: 5px;
 }
 
 .turn-indicator-side {
@@ -132,7 +135,16 @@ body {
 
 .turn-indicator-box span {
     color: #222222;
-    font-family: Roboto;
-    font-weight: 400;
+    font-family: 'Bubblegum Sans', cursive;
+    font-size: 30px;
+    /* font-weight: 400; */
     margin: 10px;
+    text-shadow: 0px 1px 2px #0009; 
+}
+
+.turn-indicator-p1 span {
+    color: var(--p1-color);
+}
+.turn-indicator-p2 span {
+    color: var(--p2-color);
 }
