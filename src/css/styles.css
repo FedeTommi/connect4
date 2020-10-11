@@ -91,13 +91,8 @@ body {
     border-radius: 50%;
     position: absolute;
     z-index: -1;
-    transition: transform 0.75s ease-in;
-    transform: translateY(0);
 }
 
-.token.checked {
-    transform: translateY(0);
-}
 .win-outline {
     bottom: 5px;
     width: 50px;
