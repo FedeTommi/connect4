@@ -5,6 +5,7 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 module.exports = {
   entry: './src/js/main.jsx',
+  mode: "development", //process.env.NODE_ENV || "development",
   devtool: 'source-map',
   plugins: [
     new HtmlWebpackPlugin({ template: "./index.html" }),
@@ -50,7 +51,7 @@ module.exports = {
                     svg.removeAttr('height');
                   }
                   return data
-      }
+                }
               } },
 						],
 					},
