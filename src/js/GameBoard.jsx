@@ -1,16 +1,78 @@
 import React from "react"
 import PropTypes from 'prop-types'
+import withStyles from 'react-jss'
 
 import Token from "./Token.jsx"
 
+const styles = {
+    grid: {
+        display: 'flex',
+        margin: '0 5px',
+        position: 'relative',
+
+        '&:before, &:after': {
+            width: 5,
+            backgroundColor: 'var(--tiffany)',
+            content: '" "',
+            display: 'block',
+            top: 0,
+            bottom: 0,
+            position: 'absolute',
+        },
+        
+        '&:before': {
+            left: -5,
+        },
+        
+        '&:after': {
+            right: -5,
+        },
+    },
+
+    column: {
+        display: 'flex',
+        flexDirection: 'column-reverse',
+        cursor: 'pointer',
+        borderTop: 'var(--tiffany) 5px solid',
+        borderBottom: 'var(--tiffany) 5px solid',
+
+        '&:hover': {
+            borderTop: 'var(--tiffany-hover) 5px solid',
+            borderBottom: 'var(--tiffany-hover) 5px solid',
+        },
+        
+        '&:hover $cell': {
+            background: '-webkit-radial-gradient(50% 50%, circle, transparent 57%, var(--tiffany-hover) 57%)',
+            
+        },
+    },
+    
+    cell: {
+        height: 50,
+        width: 50,
+        background: '-webkit-radial-gradient(50% 50%, circle, transparent 57%, var(--tiffany) 57%)',
+        position: 'relative',
+    },
+
+    winOutline: {
+        bottom: 5,
+        width: 50,
+        height: 200,
+        position: 'absolute',
+        borderRadius: 50,
+        border: '2px solid #eee',
+        transformOrigin: '25px calc(100% - 25px)',
+    },
+}
+
 class GameBoard extends React.Component {
     render() {
-        const { grid, winSequences } = this.props
+        const { grid, winSequences, classes } = this.props
 
-        return <div id="grid" className="grid">
-            {grid.map((column, x) => <div className="column" key={x} onClick={this.props.onClick(x)}>
+        return <div className={classes.grid}>
+            {grid.map((column, x) => <div className={classes.column} key={x} onClick={this.props.onClick(x)}>
                 {column.map((player, y) =>
-                    <div className="cell" key={y}>
+                    <div className={classes.cell} key={y}>
                         {player === null ? null : <Token player={player} y={y} />}
                     </div>
                 )}
@@ -18,7 +80,7 @@ class GameBoard extends React.Component {
 
             {winSequences.map(({ origin, length, rotation }) => <div
                 key={`${origin.x}-${origin.y}-${rotation}`}
-                className="win-outline"
+                className={classes.winOutline}
                 style={{
                     height: 50 + 50 * (length - 1) * (Math.abs(Math.sin(rotation)) + Math.abs(Math.cos(rotation))),
                     transform: `translate(${origin.x * 50}px, -${origin.y * 50}px) rotate(${rotation}rad)`,
@@ -29,9 +91,10 @@ class GameBoard extends React.Component {
 }
 
 GameBoard.propTypes = {
+    classes: PropTypes.object.isRequired,
     grid: PropTypes.array.isRequired,
     winSequences: PropTypes.array.isRequired,
     onClick: PropTypes.func.isRequired,
 }
 
-export default GameBoard
+export default withStyles(styles)(GameBoard)
