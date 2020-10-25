@@ -1,15 +1,17 @@
 import React from "react"
 import PropTypes from "prop-types"
 import withStyles from "react-jss"
+import { Link } from "react-router-dom" 
 
 import Button from "./components/Button"
 import YellowTokenSmiley from "../svg/yellow-token-smiley.svg"
 import RedYellowTokens from "../svg/red-yellow-happy-tokens.svg"
 
 
+
 const styles = {
     background: {
-        background: "#99E9E7",
+        background: "var(--tiffany-light)",
         height: "100vh",
         width: "100vw",
         display: "flex",
@@ -42,6 +44,7 @@ const styles = {
     smiley: {
         width: 100,
     },
+    
 }
 
 class LandingPage extends React.Component {
@@ -49,20 +52,33 @@ class LandingPage extends React.Component {
         const { classes } = this.props
 
         return <div className={classes.background} >
+            
             <div className={classes.logoStripe}>
                 <img
-                    src={require("!file-loader!../../logo.svg").default}
+                    src={require("!file-loader!../svg/logo.svg").default}
                     className={classes.logo}
                 />
             </div>
 
             <div className={classes.buttonBox}>
                 <div className={classes.buttonRow}>
-                    <Button className={classes.button}>Single player</Button>
+                    <Button 
+                        Component={Link}
+                        to='/singleplayer'
+                        className={classes.button}
+                    >
+                        Single player
+                    </Button>
                     <YellowTokenSmiley className={classes.smiley} />
                 </div>
                 <div className={classes.buttonRow}>
-                    <Button className={classes.button}>Multiplayer</Button>
+                    <Button
+                        Component={Link}
+                        to='/multiplayer'
+                        className={classes.button}
+                    >
+                        Multiplayer
+                    </Button>
                     <RedYellowTokens className={classes.smiley} />
                 </div>
             </div>
