@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import LandingPage from './LandingPage'
+import MultiPlayerPage from './MultiPlayerPage'
+import SinglePlayerPage from './SinglePlayerPage'
+import GamePage from './GamePage'
 import MFLogo from "../svg/maple-pizza-logo.svg"
 
 const styles = {
@@ -14,6 +17,7 @@ const styles = {
         bottom: 10,
     }
 }
+
 class App extends React.Component {
     render() {
         const { classes } = this.props
@@ -21,8 +25,17 @@ class App extends React.Component {
         return <Router>
             <MFLogo className={classes.maplePizza}/>
             <Switch>
-                <Route path="/">
+                <Route exact path="/">
                     <LandingPage />
+                </Route>
+                <Route exact path="/multiplayer">
+                    <MultiPlayerPage />
+                </Route>
+                <Route exact path="/singleplayer">
+                    <SinglePlayerPage />
+                </Route>
+                <Route exact path="/game">
+                    <GamePage />
                 </Route>
             </Switch>
         </Router>
