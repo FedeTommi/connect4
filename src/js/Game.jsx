@@ -1,11 +1,8 @@
-import React from "react"
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import GameBoard from "./GameBoard"
-
-export const NUM_COLUMNS = 7
-export const NUM_ROWS = 6
-
-const PLAYERS = ["P1", "P2"]
+import GameBoard from './GameBoard'
+import { NUM_COLUMNS, NUM_ROWS, PLAYERS } from './GameConstants'
 
 
 class Game extends React.Component {

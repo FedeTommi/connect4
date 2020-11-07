@@ -3,7 +3,7 @@ import withStyles from 'react-jss'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
-import { NUM_ROWS } from './Game.jsx'
+import { NUM_ROWS } from './GameConstants'
 
 
 const styles = {
