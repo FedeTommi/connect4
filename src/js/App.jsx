@@ -8,6 +8,7 @@ import LandingPage from './LandingPage'
 import MultiPlayerPage from './MultiPlayerPage'
 import SinglePlayerPage from './SinglePlayerPage'
 import GamePage from './GamePage'
+import FedePlays from './FedePlays'
 import LogoPopup from './components/LogoPopup'
 import backgroundPath from '!file-loader!../svg/abstract_background.svg'
 
@@ -45,6 +46,9 @@ class App extends React.Component {
                         </Route>
                         <Route exact path="/game">
                             <GamePage />
+                        </Route>
+                        <Route exact path="/fede">
+                            <FedePlays />
                         </Route>
                     </Switch>
                 </Router>
