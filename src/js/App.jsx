@@ -2,12 +2,16 @@ import React from 'react'
 import withStyles from 'react-jss'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import Modal from 'react-modal'
 
 import LandingPage from './LandingPage'
 import MultiPlayerPage from './MultiPlayerPage'
 import SinglePlayerPage from './SinglePlayerPage'
 import GamePage from './GamePage'
 import MFLogo from "../svg/maple-pizza-logo.svg"
+
+
+Modal.setAppElement('#react-root')
 
 const styles = {
     maplePizza: {
