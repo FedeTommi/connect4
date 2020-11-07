@@ -10,7 +10,6 @@ const styles = {
     root: {
         width: '100%',
         height: '100%',
-        background: 'var(--tiffany-light)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

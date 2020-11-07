@@ -11,7 +11,6 @@ import RedYellowTokens from "../svg/red-yellow-happy-tokens.svg"
 
 const styles = {
     background: {
-        background: "var(--tiffany-light)",
         height: "100vh",
         width: "100%",
         display: "flex",
