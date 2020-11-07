@@ -13,7 +13,7 @@ const styles = {
     background: {
         background: "var(--tiffany-light)",
         height: "100vh",
-        width: "100vw",
+        width: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -21,7 +21,7 @@ const styles = {
     },
     logoStripe: {
         height: "25vh",
-        width: "100vw",
+        width: "100%",
         display: "flex",
         background: "#ECECEC",
         alignItems: "center",
