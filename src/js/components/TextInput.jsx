@@ -12,6 +12,7 @@ const LABEL_HEIGHT = 15
 const styles = {
     wrapper: {
         display: 'flex',
+        alignItems: 'flex-start',
         flexDirection: 'column-reverse',
         width: '100%',
         padding: '2px 10px',
@@ -60,6 +61,7 @@ const styles = {
     },
 
     labelText: {
+        width: 'auto',
         display: 'block',
         color: '#C3C1C1',
         fontSize: LABEL_HEIGHT,
