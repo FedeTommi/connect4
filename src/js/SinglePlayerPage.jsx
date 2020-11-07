@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import withStyles from 'react-jss'
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 import Button from './components/Button'
 import TextInput from './components/TextInput'
@@ -16,10 +16,10 @@ const styles = {
         justifyContent: 'center',
     },
 
-    form: {
+    wrapper: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
+        alignItems: 'stretch',
         //justifyContent: center
         width: 500,
         maxWidth: '100%',
@@ -35,10 +35,17 @@ const styles = {
 
     logo: {
         width: '100%',
-    }, 
+    },
+
+    form: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
 
     input: {
         width: '80%',
+        marginTop: 0,
     },
 
     button: {
@@ -57,11 +64,22 @@ class SinglePlayerPage extends React.Component {
         }
 
         this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleChange(value) {
         //console.log(value)
         this.setState({ formdata: { nickname: value } })
+    }
+
+    handleSubmit() {
+        this.props.history.push({
+            pathname: '/game',
+            players: {
+                P1: this.state.formdata.nickname,
+                P2: 'Rob 🤖',
+            },
+        })
     }
     
     render() {
@@ -69,28 +87,26 @@ class SinglePlayerPage extends React.Component {
 
         return (
             <div className={classes.root}>
-                <form className={classes.form}>
+                <div className={classes.wrapper}>
                     <img
                         src={require('!file-loader!../svg/logo.svg').default}
                         className={classes.logo}
                     />
 
-                    <TextInput
-                        className={classes.input}
-                        value={this.state.formdata.nickname}
-                        label='Nickname'
-                        error={null}
-                        onChange={this.handleChange}
-                        placeholder='John Doe'
-                    />
-                    <Button
-                        className={classes.button}
-                        Component={Link}
-                        to='/game'
-                    >
-                        Play
-                    </Button>
-                </form>
+                    <form className={classes.form} onSubmit={this.handleSubmit}>
+                        <TextInput
+                            className={classes.input}
+                            value={this.state.formdata.nickname}
+                            label='Nickname'
+                            error={null}
+                            onChange={this.handleChange}
+                            placeholder='John Doe'
+                        />
+                        <Button className={classes.button}>
+                            Play
+                        </Button>
+                    </form>
+                </div>
             </div>
         )
     }
@@ -98,6 +114,7 @@ class SinglePlayerPage extends React.Component {
 
 SinglePlayerPage.propTypes = {
     classes: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(SinglePlayerPage)
+export default withStyles(styles)(withRouter(SinglePlayerPage))

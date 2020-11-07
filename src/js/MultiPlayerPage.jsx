@@ -17,12 +17,13 @@ const styles = {
 
     logo: {
         width: '100%',
+        margin: '20px 0',
     },
 
-    form: {
+    wrapper: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
+        alignItems: 'stretch',
         width: 500,
         maxWidth: '100%',
         margin: 0,
@@ -30,16 +31,26 @@ const styles = {
         background: '#ECECEC',
         borderRadius: 5,
         boxShadow: '0px 1px 2px #0006',
-        '& > *': {
-            margin: '20px 0',
-        },
+    },
+    form: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        margin: '20px 0',
     },
     input: {
         width: '80%',
+        marginTop: 0,
     },
     button: {
         padding: '12px 60px',
     },
+    separator: {
+        fontFamily: '"Bubblegum Sans", cursive',
+        fontSize: 18,
+        color: '#555',
+        textAlign: 'center',
+    }
 }
 
 class MultiPlayerPage extends React.Component {
@@ -49,6 +60,7 @@ class MultiPlayerPage extends React.Component {
         this.state = {
             formdata: {
                 nickname: '',
+                code: '',
             }
         }
 
@@ -65,26 +77,49 @@ class MultiPlayerPage extends React.Component {
 
         return (
             <div className={classes.root}>
-                <form className={classes.form}>
+                <div className={classes.wrapper}>
                     <img
                         src={require("!file-loader!../svg/logo.svg").default}
                         className={classes.logo}
                     />
-                    <TextInput
-                        className={classes.input}
-                        value={this.state.formdata.nickname}
-                        label='Nickname'
-                        error={null}
-                        onChange={this.handleChange}
-                        placeholder='John Doe'
-                    />
-                    <Button
-                        Component={Link}
-                        to='/game'
-                    >
-                        Host a new game
-                    </Button>
-                </form>
+                    <form className={classes.form}>
+                        <TextInput
+                            className={classes.input}
+                            value={this.state.formdata.nickname}
+                            label='Nickname'
+                            error={null}
+                            onChange={this.handleChange}
+                            placeholder='John Doe'
+                        />
+                        <Button
+                            className={classes.button}
+                            Component={Link}
+                            to='/game'
+                        >
+                            Host a new game
+                        </Button>
+                    </form>
+                    <div className={classes.separator}>
+                        — OR —
+                    </div>
+                    <form className={classes.form}>
+                        <TextInput
+                            className={classes.input}
+                            value={this.state.formdata.code}
+                            label='Code'
+                            error={null}
+                            onChange={this.handleChange}
+                            placeholder='1234'
+                        />
+                        <Button
+                            className={classes.button}
+                            Component={Link}
+                            to='/game'
+                        >
+                            Connect
+                        </Button>
+                    </form>
+                </div>
             </div>
         )
     }
