@@ -9,35 +9,47 @@ import MultiPlayerPage from './MultiPlayerPage'
 import SinglePlayerPage from './SinglePlayerPage'
 import GamePage from './GamePage'
 import LogoPopup from './components/LogoPopup'
+import backgroundPath from '!file-loader!../svg/abstract_background.svg'
 
 
 Modal.setAppElement('#react-root')
 
 const styles = {
+    background: {
+        backgroundImage: `url(${backgroundPath})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        overflowY: 'auto',
+    },
+}
 
-    }
+
 
 class App extends React.Component {
     render() {
         const { classes } = this.props
 
-        return <Router>
-            <LogoPopup />
-            <Switch>
-                <Route exact path="/">
-                    <LandingPage />
-                </Route>
-                <Route exact path="/multiplayer">
-                    <MultiPlayerPage />
-                </Route>
-                <Route exact path="/singleplayer">
-                    <SinglePlayerPage />
-                </Route>
-                <Route exact path="/game">
-                    <GamePage />
-                </Route>
-            </Switch>
-        </Router>
+        return (
+            <div className={classes.background}>
+                <Router>
+                    <LogoPopup />
+                    <Switch>
+                        <Route exact path="/">
+                            <LandingPage />
+                        </Route>
+                        <Route exact path="/multiplayer">
+                            <MultiPlayerPage />
+                        </Route>
+                        <Route exact path="/singleplayer">
+                            <SinglePlayerPage />
+                        </Route>
+                        <Route exact path="/game">
+                            <GamePage />
+                        </Route>
+                    </Switch>
+                </Router>
+            </div>
+        )
     }
 }
 
