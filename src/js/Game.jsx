@@ -132,7 +132,7 @@ class Game extends React.Component {
                 columnBoundaries.length,
                 diagonalForwardSlashBoundaries.length,
                 diagonalBackSlashBoundaries.length) >= 4) {
-            alert(`${player} won`)
+            this.props.onWin({ winnerId: player })
         }
     }
 
@@ -143,6 +143,10 @@ class Game extends React.Component {
             onClick={this.handleClick}
         />
     }
+}
+
+Game.propTypes = {
+    onWin: PropTypes.func,
 }
 
 export default Game
