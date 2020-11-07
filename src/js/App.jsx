@@ -8,26 +8,21 @@ import LandingPage from './LandingPage'
 import MultiPlayerPage from './MultiPlayerPage'
 import SinglePlayerPage from './SinglePlayerPage'
 import GamePage from './GamePage'
-import MFLogo from "../svg/maple-pizza-logo.svg"
+import LogoPopup from './components/LogoPopup'
 
 
 Modal.setAppElement('#react-root')
 
 const styles = {
-    maplePizza: {
-        width: 90,
-        position: 'absolute',
-        left: 10,
-        bottom: 10,
+
     }
-}
 
 class App extends React.Component {
     render() {
         const { classes } = this.props
 
         return <Router>
-            <MFLogo className={classes.maplePizza}/>
+            <LogoPopup />
             <Switch>
                 <Route exact path="/">
                     <LandingPage />
