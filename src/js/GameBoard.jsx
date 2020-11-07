@@ -1,17 +1,25 @@
-import React from "react"
+import React from 'react'
 import PropTypes from 'prop-types'
 import withStyles from 'react-jss'
 
-import Token from "./Token.jsx"
+import Token from './Token'
+import WinOutline from './WinOutline'
 
 
 const GRID_PADDING = 5
 
 const styles = {
+    gridWrapper: {
+        borderRadius: GRID_PADDING,
+        boxShadow: '0px 2px 2px #0006',
+    },
+    
     grid: {
+        width: 350,
         display: 'flex',
         margin: `0 ${GRID_PADDING}px`,
         position: 'relative',
+        zIndex: 0,
 
         '&:before, &:after': {
             width: GRID_PADDING,
@@ -22,20 +30,24 @@ const styles = {
             bottom: 0,
             position: 'absolute',
         },
-        
+
         '&:before': {
             left: -GRID_PADDING,
+            borderRadius: `${GRID_PADDING}px 0 0 ${GRID_PADDING}px`,
         },
         
         '&:after': {
             right: -GRID_PADDING,
+            borderRadius: `0 ${GRID_PADDING}px ${GRID_PADDING}px 0`,
         },
     },
 
     column: {
+        flex: 1,
         display: 'flex',
         flexDirection: 'column-reverse',
         cursor: 'pointer',
+        position: 'relative',
         borderTop: `var(--tiffany) ${GRID_PADDING}px solid`,
         borderBottom: `var(--tiffany) ${GRID_PADDING}px solid`,
 
@@ -52,20 +64,13 @@ const styles = {
     },
     
     cell: {
-        height: 50,
-        width: 50,
+        // Make cell as wide as column
+        width: '100%',
+        // Use padding bottom hack to make cell as heigh as it is wide
+        height: 0,
+        paddingBottom: '100%',
         background: '-webkit-radial-gradient(50% 50%, circle, transparent 57%, var(--tiffany) 57%)',
         position: 'relative',
-    },
-
-    winOutline: {
-        bottom: 5,
-        width: 50,
-        height: 200,
-        position: 'absolute',
-        borderRadius: 50,
-        border: '2px solid #eee',
-        transformOrigin: '25px calc(100% - 25px)',
     },
 }
 
@@ -73,24 +78,29 @@ class GameBoard extends React.Component {
     render() {
         const { grid, winSequences, classes } = this.props
 
-        return <div className={classes.grid}>
-            {grid.map((column, x) => <div className={classes.column} key={x} onClick={this.props.onClick(x)}>
-                {column.map((player, y) =>
-                    <div className={classes.cell} key={y}>
-                        {player === null ? null : <Token player={player} y={y} />}
-                    </div>
-                )}
-            </div>)}
-
-            {winSequences.map(({ origin, length, rotation }) => <div
-                key={`${origin.x}-${origin.y}-${rotation}`}
-                className={classes.winOutline}
-                style={{
-                    height: 50 + 50 * (length - 1) * (Math.abs(Math.sin(rotation)) + Math.abs(Math.cos(rotation))),
-                    transform: `translate(${origin.x * 50}px, -${origin.y * 50}px) rotate(${rotation}rad)`,
-                }}
-            />)}
-        </div>
+        return  (
+            <div className={classes.gridWrapper}> 
+                {/* <div '!file-loader?name=Screenshot(62).png!../../tmp/Screenshot(62).png'/>  */}
+                
+                <div className={classes.grid}>
+                    {grid.map((column, x) => <div className={classes.column} key={x} onClick={this.props.onClick(x)}>
+                        {column.map((player, y) =>
+                            <div className={classes.cell} key={y}>
+                                {player === null ? null : <Token player={player} y={y} />}
+                            </div>
+                        )}
+                        {x === 0 ? winSequences.map(({ origin, length, rotation }) =>
+                            <WinOutline
+                                length={length}
+                                rotation={rotation}
+                                origin={origin}
+                                key={`${origin.x}-${origin.y}-${rotation}`}
+                            />
+                        ) : null}
+                    </div>)}          
+                </div>
+            </div>
+        )
     }
 }
 
