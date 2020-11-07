@@ -35,14 +35,21 @@ const styles = {
         padding: "30px 0",
     },
     buttonRow: {
-        padding: "15px 0",
+        padding: "-50px 0",
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     button: {
         width: 160,
+        margin: '0 15px'
     },
-    smiley: {
-        width: 100,
+    smiley2: {
+        height: 100,
     },
+    smiley1: {
+        height: 80,
+    }
     
 }
 
@@ -68,17 +75,17 @@ class LandingPage extends React.Component {
                     >
                         Single player
                     </Button>
-                    <YellowTokenSmiley className={classes.smiley} />
+                    <YellowTokenSmiley className={classes.smiley1} />
                 </div>
                 <div className={classes.buttonRow}>
+                    <RedYellowTokens className={classes.smiley2} />
                     <Button
                         Component={Link}
                         to='/multiplayer'
                         className={classes.button}
                     >
                         Multiplayer
-                    </Button>
-                    <RedYellowTokens className={classes.smiley} />
+                    </Button>                
                 </div>
             </div>
         </div>
