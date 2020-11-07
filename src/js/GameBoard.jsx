@@ -4,14 +4,17 @@ import withStyles from 'react-jss'
 
 import Token from "./Token.jsx"
 
+
+const GRID_PADDING = 5
+
 const styles = {
     grid: {
         display: 'flex',
-        margin: '0 5px',
+        margin: `0 ${GRID_PADDING}px`,
         position: 'relative',
 
         '&:before, &:after': {
-            width: 5,
+            width: GRID_PADDING,
             backgroundColor: 'var(--tiffany)',
             content: '" "',
             display: 'block',
@@ -21,11 +24,11 @@ const styles = {
         },
         
         '&:before': {
-            left: -5,
+            left: -GRID_PADDING,
         },
         
         '&:after': {
-            right: -5,
+            right: -GRID_PADDING,
         },
     },
 
@@ -33,12 +36,13 @@ const styles = {
         display: 'flex',
         flexDirection: 'column-reverse',
         cursor: 'pointer',
-        borderTop: 'var(--tiffany) 5px solid',
-        borderBottom: 'var(--tiffany) 5px solid',
+        borderTop: `var(--tiffany) ${GRID_PADDING}px solid`,
+        borderBottom: `var(--tiffany) ${GRID_PADDING}px solid`,
+
 
         '&:hover': {
-            borderTop: 'var(--tiffany-hover) 5px solid',
-            borderBottom: 'var(--tiffany-hover) 5px solid',
+            borderTop: `var(--tiffany-hover) ${GRID_PADDING}px solid`,
+            borderBottom: `var(--tiffany-hover) ${GRID_PADDING}px solid`,
         },
         
         '&:hover $cell': {
