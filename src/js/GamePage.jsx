@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import withStyles from 'react-jss'
 import Modal from 'react-modal'
-import { Link, withRouter } from 'react-router-dom'
+import { Link, withRouter, Redirect } from 'react-router-dom'
 
 import Game from './Game'
 import Button from './components/Button'
@@ -172,6 +172,8 @@ class GamePage extends React.Component {
     render() { 
         const { classes } = this.props
         const { players } = this.props.location
+
+        if (!players) return <Redirect to='/' />
 
         return <Fragment>
             <Modal  
