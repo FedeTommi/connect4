@@ -58,12 +58,17 @@ class MultiPlayerPage extends React.Component {
         super(props)
         
         this.state = {
-                nickname: '',
-                code: '',
-            }
+            nickname: '',
+            code: '',
+        }
 
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+    }
+
+    handleChange(event) {
+        const { value, name } = event.target
+        this.setState({ [name]: value })
     }
 
     handleSubmit() {
@@ -89,17 +94,14 @@ class MultiPlayerPage extends React.Component {
                     <form className={classes.form} onSubmit={this.handleSubmit}>
                         <TextInput
                             className={classes.input}
-                            value={this.state.formdata.nickname}
+                            name='nickname'
+                            value={this.state.nickname}
                             label='Nickname'
                             error={null}
                             onChange={this.handleChange}
                             placeholder='John Doe'
                         />
-                        <Button
-                            className={classes.button}
-                            Component={Link}
-                            to='/game'
-                        >
+                        <Button className={classes.button}>
                             Host a new game
                         </Button>
                     </form>
@@ -109,7 +111,8 @@ class MultiPlayerPage extends React.Component {
                     <form className={classes.form}>
                         <TextInput
                             className={classes.input}
-                            value={this.state.formdata.code}
+                            value={this.state.code}
+                            name='code'
                             label='Code'
                             error={null}
                             onChange={this.handleChange}
