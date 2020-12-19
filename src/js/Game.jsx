@@ -10,6 +10,7 @@ class Game extends React.Component {
         super()
 
         this.state = {
+            scores: { P1: 0, P2: 0 },
             ...this.defaultState(),
         }
 
@@ -22,6 +23,7 @@ class Game extends React.Component {
             turnCounter: 0,
             grid: Array.from(Array(NUM_COLUMNS), () => new Array(NUM_ROWS).fill(null)),
             winSequences: [],
+            winningPlayerID: null,
         }
     }
 
@@ -139,8 +141,11 @@ class Game extends React.Component {
                 columnBoundaries.length,
                 diagonalForwardSlashBoundaries.length,
                 diagonalBackSlashBoundaries.length) >= 4) {
-            this.props.onWin({ winnerId: player })
+            const { scores } = this.state
+            scores[player]++
+            this.setState({ winningPlayerID: player, scores })
         }
+    }
 
     handleNewGame() {
         this.setState(this.defaultState())
