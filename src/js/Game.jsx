@@ -1,7 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-import GameBoard from './GameBoard'
+import GameComponents from './GameComponents'
 import { NUM_COLUMNS, NUM_ROWS, PLAYERS } from './GameConstants'
 
 
@@ -152,16 +151,18 @@ class Game extends React.Component {
     }
 
     render() {
-        return <GameBoard
+        const { ...rest } = this.props
+
+        return <GameComponents
             grid={this.state.grid}
             winSequences={this.state.winSequences}
             onClick={this.handleClick}
+            onNewGame={this.handleNewGame}
+            winningPlayerID={this.state.winningPlayerID}
+            scores={this.state.scores}
+            {...rest}
         />
     }
-}
-
-Game.propTypes = {
-    onWin: PropTypes.func,
 }
 
 export default Game
