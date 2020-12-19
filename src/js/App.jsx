@@ -36,19 +36,19 @@ class App extends React.Component {
                 <Router>
                     <LogoPopup />
                     <Switch>
-                        <Route exact path="/">
+                        <Route exact path='/'>
                             <LandingPage />
                         </Route>
-                        <Route exact path="/multiplayer">
+                        <Route exact path='/multiplayer'>
                             <MultiPlayerPage />
                         </Route>
-                        <Route exact path="/singleplayer">
+                        <Route exact path='/singleplayer'>
                             <SinglePlayerPage />
                         </Route>
-                        <Route exact path="/game">
+                        <Route exact path='/game'>
                             <GamePage />
                         </Route>
-                        <Route exact path="/fede">
+                        <Route exact path='/fede'>
                             <FedePlays />
                         </Route>
                         <Route exact path='/connect/:gameCode'>
