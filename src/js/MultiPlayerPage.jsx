@@ -1,7 +1,7 @@
 import React from 'react'
 import withStyles from 'react-jss'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 import Button from './components/Button'
 import TextInput from './components/TextInput'
@@ -65,11 +65,17 @@ class MultiPlayerPage extends React.Component {
         }
 
         this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleChange(value) {
-        //console.log(value)
-        this.setState({ formdata: { nickname: value } })
+    handleSubmit() {
+        this.props.history.push({
+            pathname: '/connect/12345678',
+            players: {
+                P1: this.state.nickname,
+                P2: '',
+            },
+        })
     }
     
     render() {
@@ -82,7 +88,7 @@ class MultiPlayerPage extends React.Component {
                         src={require("!file-loader!../svg/logo.svg").default}
                         className={classes.logo}
                     />
-                    <form className={classes.form}>
+                    <form className={classes.form} onSubmit={this.handleSubmit}>
                         <TextInput
                             className={classes.input}
                             value={this.state.formdata.nickname}
@@ -127,6 +133,7 @@ class MultiPlayerPage extends React.Component {
 
 MultiPlayerPage.propTypes = {
     classes: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(MultiPlayerPage)
+export default withStyles(styles)(withRouter(MultiPlayerPage))
