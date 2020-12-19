@@ -10,12 +10,19 @@ class Game extends React.Component {
         super()
 
         this.state = {
+            ...this.defaultState(),
+        }
+
+        this.handleClick = this.handleClick.bind(this)
+        this.handleNewGame = this.handleNewGame.bind(this)
+    }
+
+    defaultState() {
+        return {
             turnCounter: 0,
             grid: Array.from(Array(NUM_COLUMNS), () => new Array(NUM_ROWS).fill(null)),
             winSequences: [],
         }
-
-        this.handleClick = this.handleClick.bind(this)
     }
 
     handleClick(x) {
@@ -134,6 +141,9 @@ class Game extends React.Component {
                 diagonalBackSlashBoundaries.length) >= 4) {
             this.props.onWin({ winnerId: player })
         }
+
+    handleNewGame() {
+        this.setState(this.defaultState())
     }
 
     render() {
