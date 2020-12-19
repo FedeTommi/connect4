@@ -58,11 +58,9 @@ class MultiPlayerPage extends React.Component {
         super(props)
         
         this.state = {
-            formdata: {
                 nickname: '',
                 code: '',
             }
-        }
 
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)

@@ -58,25 +58,23 @@ class SinglePlayerPage extends React.Component {
         super(props)
         
         this.state = {
-            formdata: {
-                nickname: '',
-            }
+            nickname: '',
         }
 
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    handleChange(value) {
-        //console.log(value)
-        this.setState({ formdata: { nickname: value } })
+    handleChange(event) {
+        const { value, name } = event.target
+        this.setState({ [name]: value })
     }
-
+    
     handleSubmit() {
         this.props.history.push({
             pathname: '/game',
             players: {
-                P1: this.state.formdata.nickname,
+                P1: this.state.nickname,
                 P2: 'Rob 🤖',
             },
         })
@@ -96,7 +94,8 @@ class SinglePlayerPage extends React.Component {
                     <form className={classes.form} onSubmit={this.handleSubmit}>
                         <TextInput
                             className={classes.input}
-                            value={this.state.formdata.nickname}
+                            value={this.state.nickname}
+                            name='nickname'
                             label='Nickname'
                             error={null}
                             onChange={this.handleChange}
