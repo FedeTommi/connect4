@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 
 import GameBoard from './GameBoard'
 import Button from './components/Button'
+import Timer from './components/Timer'
 import Hourglass from '../svg/hourglass.svg'
 import Logo from '../svg/logo.svg'
 
@@ -146,7 +147,7 @@ class GameComponents extends React.Component {
         super()
 
         this.state = {
-            pauseModalIsOpen: false,
+            isPaused: false,
         }
 
         this.handlePause = this.handlePause.bind(this)
@@ -154,11 +155,11 @@ class GameComponents extends React.Component {
     }
 
     handlePause() {
-        this.setState({ pauseModalIsOpen: true }) 
+        this.setState({ isPaused: true }) 
     }
 
     handleResume() {
-        this.setState({ pauseModalIsOpen: false })
+        this.setState({ isPaused: false })
     }
 
     render() {
@@ -166,7 +167,7 @@ class GameComponents extends React.Component {
 
         return <Fragment>
             <Modal  
-                isOpen={this.state.pauseModalIsOpen}
+                isOpen={this.state.isPaused}
                 onRequestClose={this.handleResume}
                 style={pauseModalStyles}
             >
@@ -224,7 +225,7 @@ class GameComponents extends React.Component {
                         </span>
                         <div className={classes.timer}>
                             <Hourglass className={classes.hourglass} />
-                            <div>30</div>
+                            <Timer isPaused={this.state.isPaused} />
                         </div>
                         <span className={classes.player2}>
                             {players.P2}
