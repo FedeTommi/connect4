@@ -20,6 +20,10 @@ const styles = {
         overflow: 'hidden',
         cursor: 'pointer',
         zIndex: 1,
+        transition: 'transform 0.25s ease-out',
+        '&:hover': {
+            transform: 'scale(1.05)',
+        }
     },
     triangle: {
         top: 0,
