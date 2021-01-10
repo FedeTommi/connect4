@@ -72,17 +72,6 @@ const styles = {
  }
 
  class TextInput extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.handleChange = this.handleChange.bind(this)
-    }
-
-    handleChange(event) {
-        const value = event.target.value
-        this.props.onChange(value)
-    }
-
     render() {
         const { classes, value, error, label, className, onChange, ...rest } = this.props
 
@@ -95,7 +84,7 @@ const styles = {
                 <input className={classes.input}
                     type="text"
                     value={value}
-                    onChange={this.handleChange}
+                    onChange={onChange}
                     {...rest}
                 />
                 <span className={classes.labelText}>{label}</span>
