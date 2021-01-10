@@ -54,23 +54,16 @@ const styles = {
 }
 
 class SinglePlayerPage extends React.Component {
-    constructor(props) {
-        super(props)
-        
-        this.state = {
-            nickname: '',
-        }
-
-        this.handleChange = this.handleChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
+    state = {
+        nickname: '',
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
         const { value, name } = event.target
         this.setState({ [name]: value })
     }
-    
-    handleSubmit() {
+
+    handleSubmit = () => {
         this.props.history.push({
             pathname: '/game',
             players: {
@@ -79,7 +72,7 @@ class SinglePlayerPage extends React.Component {
             },
         })
     }
-    
+
     render() {
         const { classes } = this.props
 

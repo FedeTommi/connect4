@@ -5,17 +5,10 @@ import { NUM_COLUMNS, NUM_ROWS, PLAYERS } from './GameConstants'
 
 
 class Game extends React.Component {
-    constructor() {
-        super()
-
-        this.state = {
+    state = {
             scores: { P1: 0, P2: 0 },
             ...this.defaultState(),
         }
-
-        this.handleClick = this.handleClick.bind(this)
-        this.handleNewGame = this.handleNewGame.bind(this)
-    }
 
     defaultState() {
         return {
@@ -26,8 +19,8 @@ class Game extends React.Component {
         }
     }
 
-    handleClick(x) {
-        return function() {
+    handleClick = (x) => {
+        return () => {
             const y = this.state.grid[x].indexOf(null)
 
             const player = PLAYERS[this.state.turnCounter % 2]
@@ -45,11 +38,10 @@ class Game extends React.Component {
             })
             
             this.checkWinCondition(player, x, y)
-
-        }.bind(this)
+        }
     }
 
-    checkWinCondition(player, x, y) {
+    checkWinCondition = (player, x, y) => {
         const getRightBoundary = (array, startPoint) => {
             for (let i = startPoint; i < array.length; i++) {
                 if (array[i] !== array[startPoint]) return i - 1
@@ -146,7 +138,7 @@ class Game extends React.Component {
         }
     }
 
-    handleNewGame() {
+    handleNewGame = () => {
         this.setState(this.defaultState())
     }
 

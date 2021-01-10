@@ -143,22 +143,15 @@ const winModalStyles = {
 }
 
 class GameComponents extends React.Component {
-    constructor() {
-        super()
-
-        this.state = {
+    state = {
             isPaused: false,
         }
 
-        this.handlePause = this.handlePause.bind(this)
-        this.handleResume = this.handleResume.bind(this)
-    }
-
-    handlePause() {
+    handlePause = () => {
         this.setState({ isPaused: true }) 
     }
 
-    handleResume() {
+    handleResume = () => {
         this.setState({ isPaused: false })
     }
 

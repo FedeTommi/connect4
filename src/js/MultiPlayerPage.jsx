@@ -54,24 +54,17 @@ const styles = {
 }
 
 class MultiPlayerPage extends React.Component {
-    constructor(props) {
-        super(props)
-        
-        this.state = {
-            nickname: '',
-            code: '',
-        }
-
-        this.handleChange = this.handleChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
+    state = {
+        nickname: '',
+        code: '',
     }
 
-    handleChange(event) {
+    handleChange = (event) => {
         const { value, name } = event.target
         this.setState({ [name]: value })
     }
 
-    handleSubmit() {
+    handleSubmit = () => {
         this.props.history.push({
             pathname: '/connect/12345678',
             players: {
@@ -80,7 +73,7 @@ class MultiPlayerPage extends React.Component {
             },
         })
     }
-    
+
     render() {
         const { classes } = this.props
 

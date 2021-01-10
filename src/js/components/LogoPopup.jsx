@@ -53,22 +53,15 @@ const modalStyles = {
 }
 
 class LogoPopup extends React.Component {
-    constructor() {
-        super()
-
-        this.state = {
-            isOpen: false,
-        }
-
-        this.open = this.open.bind(this)
-        this.close = this.close.bind(this)
+    state = {
+        isOpen: false,
     }
 
-    close() {
+    close = () => {
         this.setState({ isOpen: false })
     }
 
-    open() {
+    open = () => {
         this.setState({ isOpen: true })
     }
 
@@ -77,26 +70,26 @@ class LogoPopup extends React.Component {
 
         return <Fragment>
             {/* I like it  miao <3*/}
-            <MFLogo 
+            <MFLogo
                 className={classes.maplePizza}
                 onClick={this.open} />
-            <Modal 
+            <Modal
                 isOpen={this.state.isOpen}
                 style={modalStyles}
                 onRequestClose={this.close}
             >
                 <div className={classes.textInModal}>Created by:</div>
-                <a 
+                <a
                     className={classes.nameLinkedid}
                     href='http://linkedin.com/in/marcel-robitaille'>
-                    Marcellino 
+                    Marcellino
                 </a>
                 <div className={classes.textInModal}>&</div>
                 <Link
                     className={classes.nameLinkedid}
                     to='/fede'
-                    // Fede's linkedin:
-                    // href='http://www.linkedin.com/in/federica-tomola-44124a184/'>
+                // Fede's linkedin:
+                // href='http://www.linkedin.com/in/federica-tomola-44124a184/'>
                 >
                     Federchicca
                 </Link>
