@@ -25,10 +25,10 @@ const styles = {
         marginBottom: 20,
         marginTop: 20,
         cursor: 'text',
-        
+
         '&:hover': {
             backgroundColor: 'white',
-        },   
+        },
     },
 
     input: {
@@ -69,16 +69,16 @@ const styles = {
         transformOrigin: 'left',
         transform: `translateY(${(INPUT_HEIGHT) / 2}px) scale(${INPUT_HEIGHT / LABEL_HEIGHT})`,
     },
- }
+}
 
- class TextInput extends React.Component {
+class TextInput extends React.Component {
     render() {
         const { classes, value, error, label, className, onChange, ...rest } = this.props
 
         // Remove unused variable warning
         // Taken out of props to remove it from `rest`
         onChange
-        
+
         return (
             <label className={classNames(classes.wrapper, className)}>
                 <input className={classes.input}
@@ -101,6 +101,6 @@ TextInput.propTypes = {
     label: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     placeholder: PropTypes.string.isRequired,
-} 
+}
 
 export default withStyles(styles)(TextInput)

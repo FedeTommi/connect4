@@ -93,6 +93,7 @@ class SinglePlayerPage extends React.Component {
                             error={null}
                             onChange={this.handleChange}
                             placeholder='John Doe'
+                            autoFocus
                         />
                         <Button className={classes.button}>
                             Play
