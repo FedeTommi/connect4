@@ -94,6 +94,7 @@ class SinglePlayerPage extends React.Component {
                             onChange={this.handleChange}
                             placeholder='John Doe'
                             autoFocus
+                            required
                         />
                         <Button className={classes.button}>
                             Play

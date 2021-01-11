@@ -94,6 +94,7 @@ class MultiPlayerPage extends React.Component {
                             onChange={this.handleChange}
                             placeholder='John Doe'
                             autoFocus
+                            required
                         />
                         <Button className={classes.button}>
                             Host a new game
@@ -111,6 +112,7 @@ class MultiPlayerPage extends React.Component {
                             error={null}
                             onChange={this.handleChange}
                             placeholder='1234'
+                            required
                         />
                         <Button
                             className={classes.button}
