@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom'
 import GameBoard from './GameBoard'
 import Button from './components/Button'
 import Timer from './components/Timer'
-import Hourglass from '../svg/hourglass.svg'
 import Logo from '../svg/logo.svg'
 
 
@@ -17,16 +16,16 @@ const styles = {
         height: '100%',
         width: '100%',
         display: 'flex',
-        flexDirection: 'column',   
+        flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        
+
         // zIndex: -1,
     },
     wrapper: {
         width: 380,
         justifyContent: 'center',
-        display:'inline-block',
+        display: 'inline-block',
         background: '#EEEEEE',
         boxShadow: '0px 1px 2px #0006',
         borderRadius: 5,
@@ -82,7 +81,7 @@ const styles = {
             fontSize: 30,
             /* font-weight: 400, */
             margin: 10,
-            textShadow: '0px 1px 2px #0009', 
+            textShadow: '0px 1px 2px #0009',
         },
     },
     player1: {
@@ -94,17 +93,6 @@ const styles = {
         flex: 1,
         textAlign: 'right',
     },
-    hourglass: {
-        height: 50,
-    },
-    timer: {
-        fontFamily: '"Bubblegum Sans", cursive',
-        fontSize: 20,
-        color: 'black',
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems:'center',
-    }
 }
 
 const pauseModalStyles = {
@@ -139,16 +127,16 @@ const winModalStyles = {
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 1,
-    }
+    },
 }
 
 class GameComponents extends React.Component {
     state = {
-            isPaused: false,
-        }
+        isPaused: false,
+    }
 
     handlePause = () => {
-        this.setState({ isPaused: true }) 
+        this.setState({ isPaused: true })
     }
 
     handleResume = () => {
@@ -156,77 +144,82 @@ class GameComponents extends React.Component {
     }
 
     render() {
-        const { classes, players, winningPlayerID, scores, onNewGame, ...rest } = this.props
+        const {
+            classes,
+            players,
+            winningPlayerID,
+            scores,
+            onNewGame,
+            onTimeOut,
+            turnCounter,
+            ...rest
+        } = this.props
 
-        return <Fragment>
-            <Modal  
-                isOpen={this.state.isPaused}
-                onRequestClose={this.handleResume}
-                style={pauseModalStyles}
-            >
-                <Button
-                    className={classes.button}
-                    onClick={this.handleResume}
+        return (
+            <Fragment>
+                <Modal
+                    isOpen={this.state.isPaused}
+                    onRequestClose={this.handleResume}
+                    style={pauseModalStyles}
                 >
-                    Resume 
-                </Button>
-                <Button
-                    className={classes.button}
-                    Component={Link}
-                    to='/'
+                    <Button
+                        className={classes.button}
+                        onClick={this.handleResume}
+                    >
+                        Resume
+                    </Button>
+                    <Button className={classes.button} Component={Link} to="/">
+                        Back to menu
+                    </Button>
+                </Modal>
+                <Modal
+                    isOpen={winningPlayerID !== null}
+                    onRequestClose={this.handleResume}
+                    style={winModalStyles}
                 >
-                    Back to menu
-                </Button>
-            </Modal>
-            <Modal
-                isOpen={winningPlayerID !== null}
-                onRequestClose={this.handleResume}
-                style={winModalStyles}>
-                <div className={classes.winModalHeader}>
-                    {players[winningPlayerID]} won
-                </div>
-                <div>
-                    {players.P1} {scores.P1} : {scores.P2} {players.P2}
-                </div>
-                <Button
-                    className={classes.button}
-                    onClick={onNewGame}
-                >
-                    Play again
-                </Button>
-                <Button
-                    className={classes.button}
-                    Component={Link}
-                    to='/'>
-                    Back to main menu
-                </Button>
-            </Modal>
+                    <div className={classes.winModalHeader}>
+                        {players[winningPlayerID]} won
+                    </div>
+                    <div>
+                        {players.P1} {scores.P1} : {scores.P2} {players.P2}
+                    </div>
+                    <Button className={classes.button} onClick={onNewGame}>
+                        Play again
+                    </Button>
+                    <Button className={classes.button} Component={Link} to="/">
+                        Back to main menu
+                    </Button>
+                </Modal>
 
-            <div className={classes.background}>
-                <Button
-                    className={classes.pauseButton}
-                    onClick={this.handlePause}
-                >
-                    | |
-                </Button>
-                <div className={classes.wrapper}>
-                    <Logo className={classes.logo} />
-                    <GameBoard {...rest} />
-                    <div className={classes.turnField}>
-                        <span className={classes.player1}>
-                            {players.P1}
-                        </span>
-                        <div className={classes.timer}>
-                            <Hourglass className={classes.hourglass} />
-                            <Timer isPaused={this.state.isPaused} />
+                <div className={classes.background}>
+                    <Button
+                        className={classes.pauseButton}
+                        onClick={this.handlePause}
+                    >
+                        | |
+                    </Button>
+                    <div className={classes.wrapper}>
+                        <Logo className={classes.logo} />
+                        <GameBoard {...rest} />
+                        <div className={classes.turnField}>
+                            <span className={classes.player1}>
+                                {players.P1}
+                            </span>
+                            <div>
+                                <Timer
+                                    isPaused={this.state.isPaused || winningPlayerID !== null}
+                                    onTimeOut={onTimeOut}
+                                    turnCounter={turnCounter}
+                                />
+                            </div>
+                            <span className={classes.player2}>
+                                {players.P2}
+                            </span>
                         </div>
-                        <span className={classes.player2}>
-                            {players.P2}
-                        </span>
-                    </div>  
+                    </div>
                 </div>
-            </div>
-        </Fragment>
+            </Fragment>
+        )
     }
 }
 
@@ -236,6 +229,8 @@ GameComponents.propTypes = {
     winningPlayerID: PropTypes.string,
     onNewGame: PropTypes.func.isRequired,
     scores: PropTypes.object.isRequired,
+    onTimeOut: PropTypes.func.isRequired,
+    turnCounter: PropTypes.number.isRequired,
 }
 
 export default withStyles(styles)(GameComponents)

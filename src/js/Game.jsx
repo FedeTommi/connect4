@@ -6,9 +6,9 @@ import { NUM_COLUMNS, NUM_ROWS, PLAYERS } from './GameConstants'
 
 class Game extends React.Component {
     state = {
-            scores: { P1: 0, P2: 0 },
-            ...this.defaultState(),
-        }
+        scores: { P1: 0, P2: 0 },
+        ...this.defaultState(),
+    }
 
     defaultState() {
         return {
@@ -19,27 +19,27 @@ class Game extends React.Component {
         }
     }
 
-    handleClick = (x) => {
-        return () => {
-            const y = this.state.grid[x].indexOf(null)
+    placeTokenAtX = (x) => {
+        const y = this.state.grid[x].indexOf(null)
 
-            const player = PLAYERS[this.state.turnCounter % 2]
+        const player = PLAYERS[this.state.turnCounter % 2]
 
-            // Ignore if column already full
-            // Bail early, don't count as turn
-            if (y === -1) return
+        // Ignore if column already full
+        // Bail early, don't count as turn
+        if (y === -1) return
 
-            const grid = this.state.grid
-            grid[x][y] = player
-            
-            this.setState({
-                turnCounter: this.state.turnCounter + 1,
-                grid,
-            })
-            
-            this.checkWinCondition(player, x, y)
-        }
+        const grid = this.state.grid
+        grid[x][y] = player
+
+        this.setState({
+            turnCounter: this.state.turnCounter + 1,
+            grid,
+        })
+
+        this.checkWinCondition(player, x, y)
     }
+
+    handleClick = x => () => this.placeTokenAtX(x)
 
     checkWinCondition = (player, x, y) => {
         const getRightBoundary = (array, startPoint) => {
@@ -66,11 +66,11 @@ class Game extends React.Component {
 
         const column = this.state.grid[x]
         const columnBoundaries = getBoundariesForVector(column, y)
-        
+
         if (columnBoundaries.length >= 4) {
             this.setState({
                 winSequences: [{
-                    length: columnBoundaries.length, 
+                    length: columnBoundaries.length,
                     origin: { x, y: columnBoundaries.leftBoundary },
                     rotation: 0,
                 }],
@@ -79,17 +79,17 @@ class Game extends React.Component {
 
         const row = this.state.grid.map(column => column[y])
         const rowBoundaries = getBoundariesForVector(row, x)
-        
+
         if (rowBoundaries.length >= 4) {
             this.setState({
                 winSequences: [{
-                    length: rowBoundaries.length, 
+                    length: rowBoundaries.length,
                     origin: { y, x: rowBoundaries.leftBoundary },
                     rotation: Math.PI / 2,
                 }],
             })
         }
-        
+
         // Diagonal that looks like a '/'
         const diagonalForwardSlash = this.state.grid
             .map((column, i) => column[y - x + i])
@@ -99,7 +99,7 @@ class Game extends React.Component {
         if (diagonalForwardSlashBoundaries.length >= 4) {
             this.setState({
                 winSequences: [{
-                    length: diagonalForwardSlashBoundaries.length, 
+                    length: diagonalForwardSlashBoundaries.length,
                     origin: {
                         x: diagonalForwardSlashBoundaries.leftBoundary,
                         y: y - x + diagonalForwardSlashBoundaries.leftBoundary,
@@ -108,7 +108,7 @@ class Game extends React.Component {
                 }],
             })
         }
-            
+
         // Diagonal that looks like a '\'
         const diagonalBackSlash = this.state.grid
             .map((column, i) => column[y + x - i])
@@ -118,7 +118,7 @@ class Game extends React.Component {
         if (diagonalBackSlashBoundaries.length >= 4) {
             this.setState({
                 winSequences: [{
-                    length: diagonalBackSlashBoundaries.length, 
+                    length: diagonalBackSlashBoundaries.length,
                     origin: {
                         x: diagonalBackSlashBoundaries.rightBoundary,
                         y: y + x - diagonalBackSlashBoundaries.rightBoundary,
@@ -129,13 +129,21 @@ class Game extends React.Component {
         }
 
         if (Math.max(rowBoundaries.length,
-                columnBoundaries.length,
-                diagonalForwardSlashBoundaries.length,
-                diagonalBackSlashBoundaries.length) >= 4) {
+            columnBoundaries.length,
+            diagonalForwardSlashBoundaries.length,
+            diagonalBackSlashBoundaries.length) >= 4) {
             const { scores } = this.state
             scores[player]++
             this.setState({ winningPlayerID: player, scores })
         }
+    }
+
+    placeRandomToken = () => {
+        const nonFullColumns = this.state.grid
+            .map((cells, i) => ({ cells, i }))
+            .filter(({ cells }) => cells.includes(null))
+        const randomX = nonFullColumns[Math.floor(Math.random() * nonFullColumns.length)].i
+        this.placeTokenAtX(randomX)
     }
 
     handleNewGame = () => {
@@ -152,6 +160,8 @@ class Game extends React.Component {
             onNewGame={this.handleNewGame}
             winningPlayerID={this.state.winningPlayerID}
             scores={this.state.scores}
+            onTimeOut={this.placeRandomToken}
+            turnCounter={this.state.turnCounter}
             {...rest}
         />
     }
