@@ -23,6 +23,9 @@ const styles = {
         transition: 'transform 0.25s ease-out',
         '&:hover': {
             transform: 'scale(1.05)',
+        },
+        '&:focus': {
+            textDecoration: 'underline',
         }
     },
     triangle: {
@@ -38,15 +41,15 @@ const styles = {
 }
 
 class Button extends React.Component {
-    render () {
-        const { Component='button', classes, children, className, ...rest } = this.props
+    render() {
+        const { Component = 'button', classes, children, className, ...rest } = this.props
 
         return <Component className={classNames(classes.root, className)} {...rest}>
             <div className={classes.triangle} />
             {children}
         </Component>
     }
-    
+
 }
 
 Button.propTypes = {
