@@ -3,6 +3,7 @@ import Modal from 'react-modal'
 import PropTypes from 'prop-types'
 import withStyles from 'react-jss'
 import { Link } from 'react-router-dom'
+import classNames from 'classnames'
 
 import GameBoard from './GameBoard'
 import Button from './components/Button'
@@ -93,6 +94,9 @@ const styles = {
         flex: 1,
         textAlign: 'right',
     },
+    activePlayer: {
+        outline: '5px solid #b0e0df'
+    },
 }
 
 const pauseModalStyles = {
@@ -152,6 +156,7 @@ class GameComponents extends React.Component {
             onNewGame,
             onTimeOut,
             turnCounter,
+            activePlayer,
             ...rest
         } = this.props
 
@@ -202,7 +207,10 @@ class GameComponents extends React.Component {
                         <Logo className={classes.logo} />
                         <GameBoard {...rest} />
                         <div className={classes.turnField}>
-                            <span className={classes.player1}>
+                            <span className={classNames(
+                                classes.player1,
+                                { [classes.activePlayer]: activePlayer === 'P1' },
+                            )}>
                                 {players.P1}
                             </span>
                             <div>
@@ -212,7 +220,10 @@ class GameComponents extends React.Component {
                                     turnCounter={turnCounter}
                                 />
                             </div>
-                            <span className={classes.player2}>
+                            <span className={classNames(
+                                classes.player2,
+                                { [classes.activePlayer]: activePlayer === 'P2' },
+                            )}>
                                 {players.P2}
                             </span>
                         </div>
@@ -231,6 +242,7 @@ GameComponents.propTypes = {
     scores: PropTypes.object.isRequired,
     onTimeOut: PropTypes.func.isRequired,
     turnCounter: PropTypes.number.isRequired,
+    activePlayer: PropTypes.string.isRequired,
 }
 
 export default withStyles(styles)(GameComponents)
