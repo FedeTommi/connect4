@@ -47,8 +47,8 @@ const styles = {
         fontSize: 35,
     },
     button: {
-        margin: 10,
-        fontSize: 35,
+        margin: 5,
+        fontSize: 30,
     },
     winModalHeader: {
         display: 'flex',
@@ -64,6 +64,12 @@ const styles = {
         fontSize: 30,
         cursor: 'text',
         fontFamily: 'Bubblegum Sans',
+    },
+    winModalScores: {
+        fontSize: 20,
+        cursor: 'text',
+        fontFamily: 'Bubblegum Sans',
+        textAlign: 'center',
     },
     turnField: {
         background: 'white',
@@ -118,7 +124,7 @@ const pauseModalStyles = {
 
 const winModalStyles = {
     content: {
-        padding: 30,
+        padding: 5,
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
@@ -129,8 +135,9 @@ const winModalStyles = {
         background: '#0009',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         zIndex: 1,
+        paddingTop: 10,
     },
 }
 
@@ -185,7 +192,7 @@ class GameComponents extends React.Component {
                     <div className={classes.winModalHeader}>
                         {players[winningPlayerID]} won
                     </div>
-                    <div>
+                    <div className={classes.winModalScores}>
                         {players.P1} {scores.P1} : {scores.P2} {players.P2}
                     </div>
                     <Button className={classes.button} onClick={onNewGame}>
