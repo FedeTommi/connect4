@@ -1,24 +1,28 @@
 module.exports = {
-    "env": {
-        "browser": true,
-        "node": true,
-        "es2020": true
+    'env': {
+        'browser': true,
+        'node': true,
+        'es2020': true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended"
+    'extends': [
+        'eslint:recommended',
+        'plugin:react/recommended'
     ],
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
+    'parser': 'babel-eslint',
+    'parserOptions': {
+        'ecmaFeatures': {
+            'jsx': true
         },
-        "ecmaVersion": 11,
-        "sourceType": "module"
+        'ecmaVersion': 11,
+        'sourceType': 'module'
     },
-    "plugins": [
-        "react"
+    'plugins': [
+        'react',
+        'babel'
     ],
-    "rules": {
-        "no-constant-condition": ["off"]
-    }
-};
+    'rules': {
+        'no-constant-condition': ['off'],
+        'semi': ['error', 'never'],
+        'quotes': ['error', 'single'],
+    },
+}
