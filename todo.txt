@@ -1,0 +1,11 @@
+- show whose turn it is
+- make click impossible during other player's turn
+Timer
+-> time goes down from 30 to 0 s then a token is put in a random place
+- add animation:
+    - sand goes down in top, goes up in bottom
+    - when resets the hourglass turns 180°
+Single player: 
+- Rob plays its turn
+LandingPage:
+- Animation of smileys on hover (flip gently from side to side / bounce)
