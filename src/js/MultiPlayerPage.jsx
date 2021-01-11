@@ -81,7 +81,7 @@ class MultiPlayerPage extends React.Component {
             <div className={classes.root}>
                 <div className={classes.wrapper}>
                     <img
-                        src={require("!file-loader!../svg/logo.svg").default}
+                        src={require('!file-loader!../svg/logo.svg').default}
                         className={classes.logo}
                     />
                     <form className={classes.form} onSubmit={this.handleSubmit}>
