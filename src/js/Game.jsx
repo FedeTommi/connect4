@@ -46,7 +46,13 @@ class Game extends React.Component {
             return
         }
         this.placeTokenAtX(x)
-        setTimeout(this.placeRandomToken, 2000)
+
+        setTimeout(() => {
+            if (this.state.winningPlayerID === null) {
+                this.placeRandomToken()
+            }
+        }, 2000)
+
     }
 
     checkWinCondition = (grid, x, y) => {
