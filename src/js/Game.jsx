@@ -197,10 +197,9 @@ class Game extends React.Component {
 
         setTimeout(() => {
             if (this.state.winningPlayerID === null) {
-                this.placeRandomToken()
+                this.robMove()
             }
         }, 2000)
-
     }
 
     checkWinCondition = (grid, x, y) => {
@@ -213,9 +212,32 @@ class Game extends React.Component {
                 winSequences,
                 scores,
             })
+        }
+    }
+
+    robMove = () => {
+        const gridCopy = JSON.parse(JSON.stringify(this.state.grid))
+
+        // First check if Rob can win anywhere,
+        // then check if he can block anywhere
+        for (const player of ['P2', 'P1']) {
+            for (let x = 0; x < NUM_COLUMNS; x++) {
+                const y = gridCopy[x].indexOf(null)
+
+                if (y === -1) continue
+
+                gridCopy[x][y] = player
+
+                if (logic.checkWinCondition(gridCopy, x, y).length) {
+                    this.placeTokenAtX(x)
+                    return
+                }
+
+                gridCopy[x][y] = null
             }
         }
-
+        this.placeRandomToken()
+    }
 
     placeRandomToken = () => {
         const nonFullColumns = this.state.grid
@@ -289,9 +311,9 @@ class Game extends React.Component {
                             <div>
                                 <Timer
                                     isPaused={this.state.isPaused || winningPlayerID !== null}
-            onTimeOut={this.placeRandomToken}
+                                    onTimeOut={this.placeRandomToken}
                                     turnCounter={turnCounter}
-        />
+                                />
                             </div>
                             <span className={classNames(
                                 classes.player2,
@@ -305,7 +327,7 @@ class Game extends React.Component {
             </Fragment>
         )
     }
-    }
+}
 
 Game.propTypes = {
     classes: PropTypes.object.isRequired,
