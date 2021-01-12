@@ -41,7 +41,13 @@ class Game extends React.Component {
         })
     }
 
-    handleClick = x => () => this.placeTokenAtX(x)
+    handleClick = x => () => {
+        if (this.activePlayer === 'P2') {
+            return
+        }
+        this.placeTokenAtX(x)
+        setTimeout(this.placeRandomToken, 2000)
+    }
 
     checkWinCondition = (grid, x, y) => {
         const getRightBoundary = (array, startPoint) => {
