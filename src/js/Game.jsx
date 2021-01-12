@@ -1,8 +1,147 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import Modal from 'react-modal'
+import PropTypes from 'prop-types'
+import withStyles from 'react-jss'
+import { Link } from 'react-router-dom'
+import classNames from 'classnames'
 
-import GameComponents from './GameComponents'
+import * as logic from './GameLogic'
+import GameBoard from './GameBoard'
+import Button from './components/Button'
+import Timer from './components/Timer'
+import Logo from '../svg/logo.svg'
 import { NUM_COLUMNS, NUM_ROWS, PLAYERS } from './GameConstants'
 
+
+const styles = {
+    background: {
+        // background: '#EEEEEE',
+        height: '100%',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+
+        // zIndex: -1,
+    },
+    wrapper: {
+        width: 380,
+        justifyContent: 'center',
+        display: 'inline-block',
+        background: '#EEEEEE',
+        boxShadow: '0px 1px 2px #0006',
+        borderRadius: 5,
+        padding: 10,
+    },
+    logo: {
+        boxSizing: 'border-box',
+        width: '100%',
+        marginTop: 20,
+        marginBottom: 30,
+    },
+    pauseButton: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        margin: 20,
+        fontWeight: 'bold',
+        fontSize: 35,
+    },
+    button: {
+        margin: 5,
+        fontSize: 30,
+    },
+    winModalHeader: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '2px 10px',
+        borderRadius: 5,
+        position: 'relative',
+        backgroundColor: 'rgba(255,255,255,0.4)',
+        boxShadow: '2px 2px 4px grey',
+        margin: 10,
+        // height: 50,
+        fontSize: 30,
+        cursor: 'text',
+        fontFamily: 'Bubblegum Sans',
+    },
+    winModalScores: {
+        fontSize: 20,
+        cursor: 'text',
+        fontFamily: 'Bubblegum Sans',
+        textAlign: 'center',
+    },
+    turnField: {
+        background: 'white',
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: 10,
+        padding: 10,
+        borderRadius: 5,
+        // boxShadow: '2px 2px 4px grey',
+        // boxShadow: '0px 1px 2px #0006',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+
+        '& > span': {
+            fontFamily: 'Bubblegum Sans, cursive',
+            fontSize: 30,
+            /* font-weight: 400, */
+            margin: 10,
+            textShadow: '0px 1px 2px #0009',
+        },
+    },
+    player1: {
+        color: 'var(--p1-color)',
+        flex: 1,
+    },
+    player2: {
+        color: 'var(--p2-color)',
+        flex: 1,
+        textAlign: 'right',
+    },
+    activePlayer: {
+        outline: '5px solid #b0e0df'
+    },
+}
+
+const pauseModalStyles = {
+    content: {
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        inset: 0,
+        padding: '20px 80px',
+    },
+    overlay: {
+        background: '#0004',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 1,
+    },
+}
+
+const winModalStyles = {
+    content: {
+        padding: 5,
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        inset: 0,
+    },
+    overlay: {
+        // background: 'var(--tiffany-extra-dark)',
+        background: '#0009',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        zIndex: 1,
+        paddingTop: 10,
+    },
+}
 
 class Game extends React.Component {
     state = {
@@ -12,11 +151,20 @@ class Game extends React.Component {
 
     defaultState() {
         return {
+            isPaused: false,
             turnCounter: 0,
             grid: Array.from(Array(NUM_COLUMNS), () => new Array(NUM_ROWS).fill(null)),
             winSequences: [],
             winningPlayerID: null,
         }
+    }
+
+    handlePause = () => {
+        this.setState({ isPaused: true })
+    }
+
+    handleResume = () => {
+        this.setState({ isPaused: false })
     }
 
     get activePlayer() {
@@ -56,101 +204,18 @@ class Game extends React.Component {
     }
 
     checkWinCondition = (grid, x, y) => {
-        const getRightBoundary = (array, startPoint) => {
-            for (let i = startPoint; i < array.length; i++) {
-                if (array[i] !== array[startPoint]) return i - 1
-            }
-            return array.length - 1
-        }
-
-        const getLeftBoundary = (array, startPoint) => {
-            for (let i = startPoint; i >= 0; i--) {
-                if (array[i] !== array[startPoint]) return i + 1
-            }
-            return 0
-        }
-
-        const getBoundariesForVector = (vector, startIndex) => {
-            const rightBoundary = getRightBoundary(vector, startIndex)
-            const leftBoundary = getLeftBoundary(vector, startIndex)
-            const length = rightBoundary - leftBoundary + 1
-
-            return { rightBoundary, leftBoundary, length }
-        }
-
-        const column = grid[x]
-        const columnBoundaries = getBoundariesForVector(column, y)
-
-        if (columnBoundaries.length >= 4) {
-            this.setState({
-                winSequences: [{
-                    length: columnBoundaries.length,
-                    origin: { x, y: columnBoundaries.leftBoundary },
-                    rotation: 0,
-                }],
-            })
-        }
-
-        const row = grid.map(column => column[y])
-        const rowBoundaries = getBoundariesForVector(row, x)
-
-        if (rowBoundaries.length >= 4) {
-            this.setState({
-                winSequences: [{
-                    length: rowBoundaries.length,
-                    origin: { y, x: rowBoundaries.leftBoundary },
-                    rotation: Math.PI / 2,
-                }],
-            })
-        }
-
-        // Diagonal that looks like a '/'
-        const diagonalForwardSlash = grid
-            .map((column, i) => column[y - x + i])
-        const diagonalForwardSlashBoundaries =
-            getBoundariesForVector(diagonalForwardSlash, x)
-
-        if (diagonalForwardSlashBoundaries.length >= 4) {
-            this.setState({
-                winSequences: [{
-                    length: diagonalForwardSlashBoundaries.length,
-                    origin: {
-                        x: diagonalForwardSlashBoundaries.leftBoundary,
-                        y: y - x + diagonalForwardSlashBoundaries.leftBoundary,
-                    },
-                    rotation: Math.PI / 4,
-                }],
-            })
-        }
-
-        // Diagonal that looks like a '\'
-        const diagonalBackSlash = grid
-            .map((column, i) => column[y + x - i])
-        const diagonalBackSlashBoundaries =
-            getBoundariesForVector(diagonalBackSlash, x)
-
-        if (diagonalBackSlashBoundaries.length >= 4) {
-            this.setState({
-                winSequences: [{
-                    length: diagonalBackSlashBoundaries.length,
-                    origin: {
-                        x: diagonalBackSlashBoundaries.rightBoundary,
-                        y: y + x - diagonalBackSlashBoundaries.rightBoundary,
-                    },
-                    rotation: -Math.PI / 4,
-                }],
-            })
-        }
-
-        if (Math.max(rowBoundaries.length,
-            columnBoundaries.length,
-            diagonalForwardSlashBoundaries.length,
-            diagonalBackSlashBoundaries.length) >= 4) {
+        const winSequences = logic.checkWinCondition(grid, x, y)
+        if (winSequences.length) {
             const { scores } = this.state
             scores[this.activePlayer]++
-            this.setState({ winningPlayerID: this.activePlayer, scores })
+            this.setState({
+                winningPlayerID: this.activePlayer,
+                winSequences,
+                scores,
+            })
+            }
         }
-    }
+
 
     placeRandomToken = () => {
         const nonFullColumns = this.state.grid
@@ -165,21 +230,86 @@ class Game extends React.Component {
     }
 
     render() {
-        const { ...rest } = this.props
+        const { classes, players } = this.props
+        const { winningPlayerID, winSequences, turnCounter, scores, grid } = this.state
 
-        return <GameComponents
-            grid={this.state.grid}
-            winSequences={this.state.winSequences}
-            onClick={this.handleClick}
-            onNewGame={this.handleNewGame}
-            winningPlayerID={this.state.winningPlayerID}
-            scores={this.state.scores}
+        return (
+            <Fragment>
+                <Modal
+                    isOpen={this.state.isPaused}
+                    onRequestClose={this.handleResume}
+                    style={pauseModalStyles}
+                >
+                    <Button
+                        className={classes.button}
+                        onClick={this.handleResume}
+                    >
+                        Resume
+                    </Button>
+                    <Button className={classes.button} Component={Link} to="/">
+                        Back to menu
+                    </Button>
+                </Modal>
+                <Modal
+                    isOpen={winningPlayerID !== null}
+                    onRequestClose={this.handleResume}
+                    style={winModalStyles}
+                >
+                    <div className={classes.winModalHeader}>
+                        {players[winningPlayerID]} won
+                    </div>
+                    <div className={classes.winModalScores}>
+                        {players.P1} {scores.P1} : {scores.P2} {players.P2}
+                    </div>
+                    <Button className={classes.button} onClick={this.handleNewGame}>
+                        Play again
+                    </Button>
+                    <Button className={classes.button} Component={Link} to="/">
+                        Back to main menu
+                    </Button>
+                </Modal>
+
+                <div className={classes.background}>
+                    <Button
+                        className={classes.pauseButton}
+                        onClick={this.handlePause}
+                    >
+                        | |
+                    </Button>
+                    <div className={classes.wrapper}>
+                        <Logo className={classes.logo} />
+                        <GameBoard grid={grid} winSequences={winSequences} onClick={this.handleClick} />
+                        <div className={classes.turnField}>
+                            <span className={classNames(
+                                classes.player1,
+                                { [classes.activePlayer]: this.activePlayer === 'P1' },
+                            )}>
+                                {players.P1}
+                            </span>
+                            <div>
+                                <Timer
+                                    isPaused={this.state.isPaused || winningPlayerID !== null}
             onTimeOut={this.placeRandomToken}
-            turnCounter={this.state.turnCounter}
-            activePlayer={this.activePlayer}
-            {...rest}
+                                    turnCounter={turnCounter}
         />
+                            </div>
+                            <span className={classNames(
+                                classes.player2,
+                                { [classes.activePlayer]: this.activePlayer === 'P2' },
+                            )}>
+                                {players.P2}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </Fragment>
+        )
     }
+    }
+
+Game.propTypes = {
+    classes: PropTypes.object.isRequired,
+    players: PropTypes.object.isRequired,
 }
 
-export default Game
+export default withStyles(styles)(Game)
