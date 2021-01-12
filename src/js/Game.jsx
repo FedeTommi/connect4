@@ -195,11 +195,7 @@ class Game extends React.Component {
         }
         this.placeTokenAtX(x)
 
-        setTimeout(() => {
-            if (this.state.winningPlayerID === null) {
-                this.robMove()
-            }
-        }, 2000)
+        setTimeout(this.robMove, 2000)
     }
 
     checkWinCondition = (grid, x, y) => {
@@ -216,6 +212,8 @@ class Game extends React.Component {
     }
 
     robMove = () => {
+        if (this.state.winningPlayerID !== null) return
+
         const gridCopy = JSON.parse(JSON.stringify(this.state.grid))
 
         // First check if Rob can win anywhere,
@@ -249,6 +247,12 @@ class Game extends React.Component {
 
     handleNewGame = () => {
         this.setState(this.defaultState())
+    }
+
+    handleTimeout = () => {
+        this.placeRandomToken()
+
+        setTimeout(this.robMove, 2000)
     }
 
     render() {
@@ -311,7 +315,7 @@ class Game extends React.Component {
                             <div>
                                 <Timer
                                     isPaused={this.state.isPaused || winningPlayerID !== null}
-                                    onTimeOut={this.placeRandomToken}
+                                    onTimeOut={this.handleTimeout}
                                     turnCounter={turnCounter}
                                 />
                             </div>
