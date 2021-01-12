@@ -4,6 +4,7 @@ import withStyles from 'react-jss'
 import { withRouter } from 'react-router-dom'
 
 import Button from './components/Button'
+import Radiobutton from './components/Radiobutton'
 import TextInput from './components/TextInput'
 
 
@@ -51,6 +52,38 @@ const styles = {
     button: {
         padding: '12px 60px',
     },
+
+    radioGroup: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '80%',
+        marginBottom: 20,
+    },
+
+    easy: {
+        background: '#86e2fdff',
+    },
+
+    easyTriangle: {
+        background: '#529cffff',
+    },
+
+    medium: {
+        background: '#9cfd7aff',
+    },
+
+    mediumTriangle: {
+        background: '#2bd12ed9',
+    },
+
+    hard: {
+        background: '#fca100ff',
+    },
+
+    hardTriangle: {
+        background: '#f76404ff',
+    },
 }
 
 class SinglePlayerPage extends React.Component {
@@ -96,6 +129,11 @@ class SinglePlayerPage extends React.Component {
                             autoFocus
                             required
                         />
+                        <div className={classes.radioGroup}>
+                            <Radiobutton className={classes.easy} classes={{ triangle: classes.easyTriangle }}>Easy</Radiobutton>
+                            <Radiobutton className={classes.medium} classes={{ triangle: classes.mediumTriangle }}>Medium</Radiobutton>
+                            <Radiobutton className={classes.hard} classes={{ triangle: classes.hardTriangle }}>Hard</Radiobutton>
+                        </div>
                         <Button className={classes.button}>
                             Play
                         </Button>
