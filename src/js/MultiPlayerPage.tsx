@@ -1,8 +1,6 @@
-import React from 'react'
-import withStyles from 'react-jss'
-import PropTypes from 'prop-types'
-import { Link, withRouter } from 'react-router-dom'
-import {createUseStyles} from 'react-jss'
+import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { createUseStyles } from 'react-jss'
 import MultiPlayerGuestForm from './components/MultiPlayerGuestForm'
 import MultiPlayerHostForm from './components/MultiPlayerHostForm'
 
@@ -20,9 +18,6 @@ export const useStyles = createUseStyles({
     button: {
         padding: '12px 60px',
     },
-})
-
-const styles = {
     root: {
         width: '100%',
         height: '100%',
@@ -53,43 +48,37 @@ const styles = {
         color: '#555',
         textAlign: 'center',
     }
-}
+})
 
-class MultiPlayerPage extends React.Component {
-    state = {
+const MultiPlayerPage: React.FC<{}> = () => {
+    const classes = useStyles()
+    const history = useHistory()
+
+    const [state, setState] = useState({
         nickname: '',
         code: '',
-    }
+    })
 
-    handleGameStart = ({ nickname, code, player }) => {
-        this.props.history.push({
+    const handleGameStart = ({ nickname, code, player }: { nickname: string, code: string, player: string}) => {
+        history.push({
             pathname: "/game/",
             search: `?code=${code}&player=${player}&nickname=${nickname}`
         })
     }
 
-    render() {
-        const { classes } = this.props
-
-        return (
-            <div className={classes.root}>
-                <div className={classes.wrapper}>
-                    <img
-                        src={require('!file-loader!../svg/logo.svg').default}
-                        className={classes.logo}
-                    />
-                    <MultiPlayerHostForm onGameStart={this.handleGameStart} />
-                    <div className={classes.separator}>— OR —</div>
-                    <MultiPlayerGuestForm onGameStart={this.handleGameStart} />
-                </div>
+    return (
+        <div className={classes.root}>
+            <div className={classes.wrapper}>
+                <img
+                    src={require('!file-loader!../svg/logo.svg').default}
+                    className={classes.logo}
+                />
+                <MultiPlayerHostForm onGameStart={handleGameStart} />
+                <div className={classes.separator}>— OR —</div>
+                <MultiPlayerGuestForm onGameStart={handleGameStart} />
             </div>
+        </div>
         )
-    }
 }
 
-MultiPlayerPage.propTypes = {
-    classes: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
-}
-
-export default withStyles(styles)(withRouter(MultiPlayerPage))
+export default MultiPlayerPage

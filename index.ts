@@ -1,8 +1,8 @@
-const http = require('http')
-const path = require('path')
+import * as http from "http"
+import * as path from "path"
 
-const express = require('express')
-const WebSocketServer = require('ws').Server
+import express from "express"
+import { Server as WebSocketServer } from "ws"
 
 const port = 1234
 const app = express()
@@ -11,7 +11,7 @@ const wss = new WebSocketServer({ server: server })
 
 const games = {}
 
-const generateCode = () => {
+const generateCode = (): number => {
     const code = Math.floor(1000 + Math.random() * 9000);
     if (code in games) {
         return generateCode()
@@ -37,7 +37,7 @@ const generateCode = () => {
 wss.on("connection", (ws) => {
     console.log("client connected")
 
-    ws.on("message", (data) => {
+    ws.on("message", (data: Buffer) => {
         console.log(data.toString())
     })
 
@@ -57,7 +57,7 @@ app.get('/game-exists', (req, res) => {
     res.setHeader("Access-Control-Allow-Origin", "*")
     res.setHeader("Access-Control-Allow-Methods", "*")
     res.setHeader("Access-Control-Allow-Headers", "*")
-    const code = req.query?.code
+    const code = req.query?.code as string
     res.json({ gameExists: code in games })
 })
 

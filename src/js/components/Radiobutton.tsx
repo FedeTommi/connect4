@@ -1,19 +1,19 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import withStyles from 'react-jss'
 import classNames from 'classnames'
+import PropTypes from 'prop-types'
+import { createUseStyles } from 'react-jss'
 
-const styles = {
+const useStyles = createUseStyles({
     root: {
-        background: '#1D7775',
+        background: 'grey', //#fea #E7B55F #c87137
         borderRadius: 5,
         color: '#eee',
         outline: 'none',
         border: 'none',
         fontFamily: '"Bubblegum Sans", cursive',
         textDecoration: 'none',
-        fontSize: 25,
-        padding: '8px 16px',
+        fontSize: 26,
+        padding: '12px 20px',
         display: 'block',
         textAlign: 'center',
         position: 'relative',
@@ -35,28 +35,25 @@ const styles = {
         left: 0,
         position: 'absolute',
         zIndex: -1,
-        background: '#155755',
+        background: '#a3a3a3', //#E7B55F #c87137 #A05A2C
         clipPath: 'polygon(100% 0, 0 100%, 100% 100%)',
     },
+})
+
+type RadioButton = {
+    classes: Record<string, string>,
+    children: React.ReactNode,
+    className: string,
 }
 
-class Button extends React.Component {
-    render() {
-        const { Component = 'button', classes, children, className, ...rest } = this.props
+const Radiobutton: React.FC<RadioButton> = ({ classes: givenClasses = {}, children, className, ...rest }) => {
+    const classes = useStyles()
 
-        return <Component className={classNames(classes.root, className)} {...rest}>
-            <div className={classes.triangle} />
-            {children}
-        </Component>
-    }
-
+    return <label className={classNames(classes.root, className)} {...rest}>
+        <input type='radio' />
+        <div className={classNames(classes.triangle, givenClasses.triangle)} />
+        {children}
+    </label>
 }
 
-Button.propTypes = {
-    children: PropTypes.node,
-    className: PropTypes.string,
-    classes: PropTypes.object.isRequired,
-    Component: PropTypes.elementType,
-}
-
-export default withStyles(styles)(Button)
+export default Radiobutton

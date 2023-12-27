@@ -1,19 +1,22 @@
-export const checkWinCondition = (grid, x, y) => {
-    const getRightBoundary = (array, startPoint) => {
+type Column = ("P1" | "P2" | null)[]
+export type Grid = Column[]
+
+export const checkWinCondition = (grid: Grid, x: number, y: number) => {
+    const getRightBoundary = (array: Column, startPoint: number) => {
         for (let i = startPoint; i < array.length; i++) {
             if (array[i] !== array[startPoint]) return i - 1
         }
         return array.length - 1
     }
 
-    const getLeftBoundary = (array, startPoint) => {
+    const getLeftBoundary = (array: Column, startPoint: number) => {
         for (let i = startPoint; i >= 0; i--) {
             if (array[i] !== array[startPoint]) return i + 1
         }
         return 0
     }
 
-    const getBoundariesForVector = (vector, startIndex) => {
+    const getBoundariesForVector = (vector: Column, startIndex: number) => {
         const rightBoundary = getRightBoundary(vector, startIndex)
         const leftBoundary = getLeftBoundary(vector, startIndex)
         const length = rightBoundary - leftBoundary + 1
@@ -33,7 +36,7 @@ export const checkWinCondition = (grid, x, y) => {
         })
     }
 
-    const row = grid.map(column => column[y])
+    const row = grid.map((column) => column[y])
     const rowBoundaries = getBoundariesForVector(row, x)
 
     if (rowBoundaries.length >= 4) {
@@ -80,3 +83,5 @@ export const checkWinCondition = (grid, x, y) => {
 
     return winSequences
 }
+
+export type WinSequences = ReturnType<typeof checkWinCondition>

@@ -1,6 +1,5 @@
-import React, { Fragment } from 'react'
+import React, { CSSProperties, Fragment } from 'react'
 import Modal from 'react-modal'
-import PropTypes from 'prop-types'
 import withStyles from 'react-jss'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'
@@ -11,6 +10,7 @@ import Button from './components/Button'
 import Timer from './components/Timer'
 import Logo from '../svg/logo.svg'
 import { NUM_COLUMNS, NUM_ROWS, PLAYERS } from './GameConstants'
+import { Grid, WinSequences } from './GameLogic'
 
 
 const styles = {
@@ -108,31 +108,31 @@ const styles = {
 }
 
 const pauseModalStyles = {
-    content: {
+    content: ({
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
         inset: 0,
         padding: '20px 80px',
-    },
-    overlay: {
+    } satisfies CSSProperties),
+    overlay: ({
         background: '#0004',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         zIndex: 1,
-    },
+    } satisfies CSSProperties),
 }
 
 const winModalStyles = {
-    content: {
+    content: ({
         padding: 5,
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
         inset: 0,
-    },
-    overlay: {
+    } satisfies CSSProperties),
+    overlay: ({
         // background: 'var(--tiffany-extra-dark)',
         background: '#0009',
         display: 'flex',
@@ -140,10 +140,26 @@ const winModalStyles = {
         alignItems: 'flex-start',
         zIndex: 1,
         paddingTop: 10,
-    },
+    } satisfies CSSProperties),
 }
 
-class Game extends React.Component {
+type GameProps = {
+    players: { P1: string, P2: string },
+    onPlaceToken: (x: number) => any,
+    multiplayerCode: string | null,
+    classes: Record<string, string>,
+}
+
+type GameState = {
+    scores: { P1: number, P2: number },
+    isPaused: boolean,
+    turnCounter: number,
+    grid: Grid,
+    winningPlayerID: "P1" | "P2" | null,
+    winSequences: WinSequences,
+}
+
+class Game extends React.Component<GameProps, GameState> {
     state = {
         scores: { P1: 0, P2: 0 },
         ...this.defaultState(),
@@ -171,7 +187,7 @@ class Game extends React.Component {
         return PLAYERS[this.state.turnCounter % 2]
     }
 
-    placeTokenAtX = (x) => {
+    placeTokenAtX = (x: number) => {
         const y = this.state.grid[x].indexOf(null)
 
         // Ignore if column already full
@@ -189,7 +205,7 @@ class Game extends React.Component {
         })
     }
 
-    handleClick = x => () => {
+    handleClick = (x: number) => () => {
         if (this.activePlayer === 'P2') {
             return
         }
@@ -202,7 +218,7 @@ class Game extends React.Component {
         }
     }
 
-    checkWinCondition = (grid, x, y) => {
+    checkWinCondition = (grid: Grid, x: number, y: number) => {
         const winSequences = logic.checkWinCondition(grid, x, y)
         if (winSequences.length) {
             const { scores } = this.state
@@ -250,7 +266,7 @@ class Game extends React.Component {
     }
 
     handleNewGame = () => {
-        this.setState(this.defaultState())
+        this.setState({ ...this.state, ...this.defaultState() })
     }
 
     handleTimeout = () => {
@@ -286,7 +302,7 @@ class Game extends React.Component {
                     style={winModalStyles}
                 >
                     <div className={classes.winModalHeader}>
-                        {players[winningPlayerID]} won
+                        {players[winningPlayerID!]} won
                     </div>
                     <div className={classes.winModalScores}>
                         {players.P1} {scores.P1} : {scores.P2} {players.P2}
@@ -335,13 +351,6 @@ class Game extends React.Component {
             </Fragment>
         )
     }
-}
-
-Game.propTypes = {
-    classes: PropTypes.object.isRequired,
-    players: PropTypes.object.isRequired,
-    onPlaceToken: PropTypes.func.isRequired,
-    multiplayerCode: PropTypes.string,
 }
 
 export default withStyles(styles)(Game)

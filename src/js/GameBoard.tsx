@@ -1,14 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import withStyles from 'react-jss'
+import { createUseStyles } from 'react-jss'
 
 import Token from './Token'
 import WinOutline from './WinOutline'
+import { Grid, WinSequences } from './GameLogic'
 
 
 const GRID_PADDING = 5
 
-const styles = {
+const useStyles = createUseStyles({
     gridWrapper: {
         borderRadius: GRID_PADDING,
         boxShadow: '0px 2px 2px #0006',
@@ -72,43 +72,39 @@ const styles = {
         background: '-webkit-radial-gradient(50% 50%, circle, transparent 57%, var(--tiffany) 57%)',
         position: 'relative',
     },
+})
+
+type GameBoardProps = {
+    grid: Grid,
+    winSequences: WinSequences,
+    onClick: (x: number) => React.MouseEventHandler<HTMLDivElement>,
 }
 
-class GameBoard extends React.Component {
-    render() {
-        const { grid, winSequences, classes } = this.props
-
-        return  (
-            <div className={classes.gridWrapper}> 
-                {/* <div '!file-loader?name=Screenshot(62).png!../../tmp/Screenshot(62).png'/>  */}
-                
-                <div className={classes.grid}>
-                    {grid.map((column, x) => <div className={classes.column} key={x} onClick={this.props.onClick(x)}>
-                        {column.map((player, y) =>
-                            <div className={classes.cell} key={y}>
-                                {player === null ? null : <Token player={player} y={y} />}
-                            </div>
-                        )}
-                        {x === 0 ? winSequences.map(({ origin, length, rotation }) =>
-                            <WinOutline
-                                length={length}
-                                rotation={rotation}
-                                origin={origin}
-                                key={`${origin.x}-${origin.y}-${rotation}`}
-                            />
-                        ) : null}
-                    </div>)}          
-                </div>
+const GameBoard: React.FC<GameBoardProps> = ({ grid, winSequences, onClick }) => {
+    const classes = useStyles()
+    return  (
+        <div className={classes.gridWrapper}> 
+            {/* <div '!file-loader?name=Screenshot(62).png!../../tmp/Screenshot(62).png'/>  */}
+            
+            <div className={classes.grid}>
+                {grid.map((column, x) => <div className={classes.column} key={x} onClick={onClick(x)}>
+                    {column.map((player, y) =>
+                        <div className={classes.cell} key={y}>
+                            {player === null ? null : <Token player={player} y={y} />}
+                        </div>
+                    )}
+                    {x === 0 ? winSequences.map(({ origin, length, rotation }) =>
+                        <WinOutline
+                            length={length}
+                            rotation={rotation}
+                            origin={origin}
+                            key={`${origin.x}-${origin.y}-${rotation}`}
+                        />
+                    ) : null}
+                </div>)}          
             </div>
-        )
-    }
+        </div>
+    )
 }
 
-GameBoard.propTypes = {
-    classes: PropTypes.object.isRequired,
-    grid: PropTypes.array.isRequired,
-    winSequences: PropTypes.array.isRequired,
-    onClick: PropTypes.func.isRequired,
-}
-
-export default withStyles(styles)(GameBoard)
+export default GameBoard

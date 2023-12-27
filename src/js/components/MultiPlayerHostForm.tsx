@@ -1,19 +1,21 @@
-import React, { useState } from "react"
+import React, { FormEvent, useState } from "react"
 import Button from './Button'
 import TextInput from './TextInput'
 import { useStyles } from "../MultiPlayerPage"
 
-
-const MultiPlayerHostForm = ({ onGameStart }) => {
+type MultiPlayerHostFormProps = {
+    onGameStart: ({ code, nickname, player }: { code: string, nickname: string, player: string }) => any,
+}
+const MultiPlayerHostForm = ({ onGameStart }: MultiPlayerHostFormProps) => {
     const classes = useStyles()
     const [nickname, setNickname] = useState("")
     const [isLoading, setIsLoading] = useState(false)
 
-    const handleChange = (event) => {
-        setNickname(event.target.value)
+    const handleChange = (event: React.ChangeEvent) => {
+        setNickname((event.target as HTMLInputElement).value)
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault()
         setIsLoading(true)
         const result = await fetch('http://127.0.0.1:1234/new-game', {
@@ -24,8 +26,6 @@ const MultiPlayerHostForm = ({ onGameStart }) => {
         setIsLoading(false)
         onGameStart({ code: result.code, nickname, player: "P1" })
     }
-
-    
 
     return (
         <form className={classes.form} onSubmit={handleSubmit}>

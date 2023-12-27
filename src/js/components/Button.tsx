@@ -1,19 +1,17 @@
 import React from 'react'
-import classNames from 'classnames'
-import PropTypes from 'prop-types'
 import { createUseStyles } from 'react-jss'
 
 const useStyles = createUseStyles({
     root: {
-        background: 'grey', //#fea #E7B55F #c87137
+        background: '#1D7775',
         borderRadius: 5,
         color: '#eee',
         outline: 'none',
         border: 'none',
         fontFamily: '"Bubblegum Sans", cursive',
         textDecoration: 'none',
-        fontSize: 26,
-        padding: '12px 20px',
+        fontSize: 25,
+        padding: '8px 16px',
         display: 'block',
         textAlign: 'center',
         position: 'relative',
@@ -35,25 +33,27 @@ const useStyles = createUseStyles({
         left: 0,
         position: 'absolute',
         zIndex: -1,
-        background: '#a3a3a3', //#E7B55F #c87137 #A05A2C
+        background: '#155755',
         clipPath: 'polygon(100% 0, 0 100%, 100% 100%)',
     },
 })
 
-const Radiobutton = ({ classes: givenClasses = {}, children, className, ...rest }) => {
+type ButtonProps = {
+    Component?: keyof JSX.IntrinsicElements | React.ComponentType<any>,
+    children: React.ReactNode,
+    className?: string,
+    [x: string]: any,
+}
+const Button = ({ Component = 'button', children, className, ...rest }: ButtonProps) => {
+
     const classes = useStyles()
 
-    return <label className={classNames(classes.root, className)} {...rest}>
-        <input type='radio' />
-        <div className={classNames(classes.triangle, givenClasses.triangle)} />
-        {children}
-    </label>
+    return (
+        <Component className={`${classes.root} ${className}`} {...rest}>
+            <div className={classes.triangle} />
+            {children}
+        </Component>
+    )
 }
 
-Radiobutton.propTypes = {
-    children: PropTypes.node,
-    className: PropTypes.string,
-    classes: PropTypes.object.isRequired,
-}
-
-export default Radiobutton
+export default Button

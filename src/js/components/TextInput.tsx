@@ -1,7 +1,5 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import withStyles from 'react-jss'
-import classNames from 'classnames'
+import React, { ChangeEvent } from 'react'
+import { createUseStyles } from 'react-jss'
 
 
 //https://medium.com/@willhowardgb/building-a-beautiful-text-input-component-in-react-f85564cc7e86
@@ -9,7 +7,7 @@ import classNames from 'classnames'
 const INPUT_HEIGHT = 30
 const LABEL_HEIGHT = 15
 
-const styles = {
+const useStyles = createUseStyles({
     wrapper: {
         fontFamily: '"Bubblegum Sans", cursive',
         marginBottom: 20,
@@ -79,41 +77,35 @@ const styles = {
         padding: [10, 10, 0, 10],
         display: "inline-block",
     },
+})
+
+type TextInputProps = {
+    className?: string,
+    value: string,
+    error?: string | null,
+    label: string,
+    onChange: (event: ChangeEvent<HTMLInputElement>) => any,
+    placeholder: string,
+    [x: string]: any,
 }
 
-class TextInput extends React.Component {
-    render() {
-        const { classes, value, error, label, className, onChange, ...rest } = this.props
+const TextInput: React.FC<TextInputProps> = ({ value, error, label, className, onChange, ...rest }) => {
+    const classes = useStyles()
 
-        // Remove unused variable warning
-        // Taken out of props to remove it from `rest`
-        onChange
-
-        return (
-            <div className={classNames(classes.wrapper, className)}>
-                <label className={classes.label}>
-                    <input className={classes.input}
-                        type="text"
-                        value={value}
-                        onChange={onChange}
-                        {...rest}
-                    />
-                    <span className={classes.labelText}>{label}</span>
-                </label>
-                {error && <span className={classes.error}>{error}</span>}
-            </div>
-        )
-    }
+    return (
+        <div className={`${classes.wrapper} ${className}`}>
+            <label className={classes.label}>
+                <input className={classes.input}
+                    type="text"
+                    value={value}
+                    onChange={onChange}
+                    {...rest}
+                />
+                <span className={classes.labelText}>{label}</span>
+            </label>
+            {error && <span className={classes.error}>{error}</span>}
+        </div>
+    )
 }
 
-TextInput.propTypes = {
-    className: PropTypes.string,
-    classes: PropTypes.object.isRequired,
-    value: PropTypes.string.isRequired,
-    error: PropTypes.string,
-    label: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-    placeholder: PropTypes.string.isRequired,
-}
-
-export default withStyles(styles)(TextInput)
+export default TextInput

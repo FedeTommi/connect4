@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useSpring, animated } from 'react-spring'
 
-
+type BoopProps = {
+    x: number,
+    y: number,
+    rotation: number,
+    scale: number,
+    timing: number,
+    children: React.ReactNode,
+}
 const Boop = ({
     x = 0,
     y = 0,
@@ -10,9 +17,9 @@ const Boop = ({
     scale = 1,
     timing = 150,
     children,
-}) => {
+}: BoopProps) => {
 
-    const [isBooped, setIsBooped] = React.useState(false)
+    const [isBooped, setIsBooped] = useState(false)
 
     const style = useSpring({
         display: 'inline-block',
@@ -30,7 +37,7 @@ const Boop = ({
         },
     })
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (!isBooped) return
 
         const timeoutId = setTimeout(() => {

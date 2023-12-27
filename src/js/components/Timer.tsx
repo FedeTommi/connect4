@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import withStyles from 'react-jss'
 
 import Hourglass from '../../svg/hourglass.svg'
@@ -21,11 +20,21 @@ const styles = {
     },
 }
 
-class Timer extends React.Component {
-    constructor() {
-        super()
-        this.state = { seconds: INITIAL_TIMER }
-    }
+type TimerProps = {
+    classes: Record<string, string>,
+    isPaused: boolean,
+    onTimeOut: () => any,
+    turnCounter: number,
+}
+
+type TimerState = {
+    seconds: number,
+}
+
+class Timer extends React.Component<TimerProps, TimerState> {
+
+    intervalHandle: ReturnType<typeof setInterval> | null = null
+    state = { seconds: INITIAL_TIMER }
 
     componentDidMount() {
         this.intervalHandle = setInterval(() => {
@@ -44,14 +53,14 @@ class Timer extends React.Component {
         }, 1000)
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps: TimerProps) {
         if (this.props.turnCounter !== prevProps.turnCounter) {
             this.setState({ seconds: INITIAL_TIMER })
         }
     }
 
     componentWillUnmount() {
-        clearInterval(this.intervalHandle)
+        clearInterval(this.intervalHandle!)
     }
 
     render() {
@@ -66,13 +75,6 @@ class Timer extends React.Component {
         )
     }
 
-}
-
-Timer.propTypes = {
-    classes: PropTypes.object.isRequired,
-    isPaused: PropTypes.bool,
-    onTimeOut: PropTypes.func.isRequired,
-    turnCounter: PropTypes.number.isRequired,
 }
 
 export default withStyles(styles)(Timer)

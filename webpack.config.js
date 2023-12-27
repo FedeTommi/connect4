@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 module.exports = {
-  entry: './src/js/main.jsx',
+  entry: './src/js/main.tsx',
   mode: "development", //process.env.NODE_ENV || "development",
   devtool: 'source-map',
   plugins: [
@@ -17,6 +17,11 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -60,7 +65,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx']
+    extensions: ['*', '.js', '.jsx', '.ts', '.tsx']
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
@@ -68,8 +73,13 @@ module.exports = {
     port: 9000,
     historyApiFallback: {
       rewrites: [
-        { from: /./, to: '/index.html' }
+        { from: /./, to: '/index.html' },
+        { from: /\/game\/./, to: '/index.html' }
+
       ]
-    }
+    },
+    proxy: {
+      "/api": "http://localhost:1234",
+    },
   }
 }

@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import withStyles from 'react-jss'
+import { createUseStyles } from 'react-jss'
 // import { withRouter } from 'react-router-dom'
 
 // import YellowTokenSmiley from "../svg/yellow-token-smiley.svg"
 // import RedTokenSmiley from "../svg/red-token-smiley.svg"
 
-const styles = {
+const useStyles = createUseStyles({
     wrapper: {
         display: 'flex',
         alignItems: 'center',
@@ -29,29 +29,26 @@ const styles = {
     smiley: {
         height: 100,
     },
-}
+})
 
-class WaitingPage extends React.Component {
-    render() {
-        const{ classes } = this.props
-        // const { gameCode } = this.props.match.params
-        // console.log(gameCode)
+const WaitingPage: React.FC<{}> = () => {
+    const classes = useStyles()
+    // const { gameCode } = this.props.match.params
+    // console.log(gameCode)
 
-        return (
-            <div className={classes.wrapper}>
-                <div className={classes.window}>
-                    Waiting for opponent on channel...
-                    {/* <YellowTokenSmiley className={classes.smiley} />
-                    <RedTokenSmiley className={classes.smiley} /> */}
-                </div>
+    return (
+        <div className={classes.wrapper}>
+            <div className={classes.window}>
+                Waiting for opponent on channel...
+                {/* <YellowTokenSmiley className={classes.smiley} />
+                <RedTokenSmiley className={classes.smiley} /> */}
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 WaitingPage.propTypes = {
-    classes: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(WaitingPage)
+export default WaitingPage

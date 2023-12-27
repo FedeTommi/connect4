@@ -1,28 +1,30 @@
-import React, { useState } from "react"
+import React, { FormEvent, useState } from "react"
 import { useStyles } from "../MultiPlayerPage"
 import Button from './Button'
 import TextInput from './TextInput'
-import { Link, withRouter } from 'react-router-dom'
 
+type MultiPlayerGuestFormProps = {
+    onGameStart: ({ code, nickname, player }: { code: string, nickname: string, player: string }) => any,
+}
 
-const MultiPlayerGuestForm = (onGameStart) => {
+const MultiPlayerGuestForm = ({ onGameStart }: MultiPlayerGuestFormProps) => {
     const classes = useStyles()
     const [state, setState] = useState({nickname: "", code: ""})
     const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState(null)
+    const [error, setError] = useState<string | null>(null)
 
     
-    const handleChange = (event) => {
-        const { value, name } = event.target
+    const handleChange = (event: React.ChangeEvent) => {
+        const { value, name } = (event.target as HTMLInputElement)
         setState({ ...state, [name]: value })
     }
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault()
         setIsLoading(true)
         setError(null)
         // TODO: DO this better Freddy
-        const result = await fetch(`http://127.0.0.1:1234/game-exists/?code=${state.code}`, {method: "GET"} )
+        const result = await fetch(`http://127.0.0.1:1234/game-exists/?code=${state.code}`)
             .then(res => res.json())
         console.log(result)
         if (result.roomExists) {

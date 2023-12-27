@@ -1,10 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import withStyles from 'react-jss'
+import { createUseStyles } from 'react-jss'
 
 import FedeDrawing from '../svg/fede_drawing_.svg'
 
-const styles = {
+const useStyles = createUseStyles({
     background: {
         height: '100%',
         width: '100%',
@@ -20,21 +19,16 @@ const styles = {
         paddingTop: 20,
         // paddingBottom: 20,
     }
+})
+
+const FedePlays = () => {
+    const classes = useStyles()
+
+    return <div className={classes.background}>
+        <FedeDrawing className={classes.drawing}/>
+    </div>
+
 }
 
-class FedePlays extends React.Component {
-    render() {
-        const { classes } = this.props
 
-        return <div className={classes.background}>
-            <FedeDrawing className={classes.drawing}/>
-        </div>
-
-    }
-}
-
-FedePlays.propTypes = {
-    classes: PropTypes.object.isRequired,
-}
-
-export default withStyles(styles)(FedePlays)
+export default FedePlays
