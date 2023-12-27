@@ -195,7 +195,11 @@ class Game extends React.Component {
         }
         this.placeTokenAtX(x)
 
-        setTimeout(this.robMove, 2000)
+        if (this.props.multiplayerCode) {
+            this.props.onPlaceToken(x)
+        } else {
+            setTimeout(this.robMove, 2000)
+        }
     }
 
     checkWinCondition = (grid, x, y) => {
@@ -336,6 +340,8 @@ class Game extends React.Component {
 Game.propTypes = {
     classes: PropTypes.object.isRequired,
     players: PropTypes.object.isRequired,
+    onPlaceToken: PropTypes.func.isRequired,
+    multiplayerCode: PropTypes.string,
 }
 
 export default withStyles(styles)(Game)

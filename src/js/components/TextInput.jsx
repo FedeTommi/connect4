@@ -11,10 +11,14 @@ const LABEL_HEIGHT = 15
 
 const styles = {
     wrapper: {
+        fontFamily: '"Bubblegum Sans", cursive',
+        marginBottom: 20,
+        marginTop: 20,
+    },
+    label: {
         display: 'flex',
         alignItems: 'flex-start',
         flexDirection: 'column-reverse',
-        width: '100%',
         padding: '2px 10px',
         borderRadius: 5,
         position: 'relative',
@@ -22,8 +26,7 @@ const styles = {
         transition: '0.3s all',
         //transition: '0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out'
         boxShadow: '2px 2px 4px grey',
-        marginBottom: 20,
-        marginTop: 20,
+
         cursor: 'text',
 
         '&:hover': {
@@ -69,6 +72,13 @@ const styles = {
         transformOrigin: 'left',
         transform: `translateY(${(INPUT_HEIGHT) / 2}px) scale(${INPUT_HEIGHT / LABEL_HEIGHT})`,
     },
+
+    error: {
+        fontSize: LABEL_HEIGHT,
+        color: "#a40000",
+        padding: [10, 10, 0, 10],
+        display: "inline-block",
+    },
 }
 
 class TextInput extends React.Component {
@@ -80,15 +90,18 @@ class TextInput extends React.Component {
         onChange
 
         return (
-            <label className={classNames(classes.wrapper, className)}>
-                <input className={classes.input}
-                    type="text"
-                    value={value}
-                    onChange={onChange}
-                    {...rest}
-                />
-                <span className={classes.labelText}>{label}</span>
-            </label>
+            <div className={classNames(classes.wrapper, className)}>
+                <label className={classes.label}>
+                    <input className={classes.input}
+                        type="text"
+                        value={value}
+                        onChange={onChange}
+                        {...rest}
+                    />
+                    <span className={classes.labelText}>{label}</span>
+                </label>
+                {error && <span className={classes.error}>{error}</span>}
+            </div>
         )
     }
 }

@@ -12,6 +12,7 @@
   "devDependencies": {
     "@babel/core": "^7.10.5",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.23.6",
     "@babel/preset-env": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "babel-eslint": "^10.1.0",
@@ -42,6 +43,7 @@
     "react-dom": "^16.13.1",
     "react-inlinesvg": "^2.0.0",
     "react-modal": "^3.11.2",
-    "react-spring": "^8.0.27"
+    "react-spring": "^8.0.27",
+    "ws": "^8.16.0"
   }
 }

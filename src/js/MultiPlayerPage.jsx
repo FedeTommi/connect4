@@ -2,9 +2,25 @@ import React from 'react'
 import withStyles from 'react-jss'
 import PropTypes from 'prop-types'
 import { Link, withRouter } from 'react-router-dom'
+import {createUseStyles} from 'react-jss'
+import MultiPlayerGuestForm from './components/MultiPlayerGuestForm'
+import MultiPlayerHostForm from './components/MultiPlayerHostForm'
 
-import Button from './components/Button'
-import TextInput from './components/TextInput'
+export const useStyles = createUseStyles({
+    form: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        margin: '20px 0',
+    },
+    input: {
+        width: '80%',
+        marginTop: 0,
+    },
+    button: {
+        padding: '12px 60px',
+    },
+})
 
 const styles = {
     root: {
@@ -14,7 +30,6 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'center',
     },
-
     logo: {
         width: '100%',
         margin: '20px 0',
@@ -32,19 +47,6 @@ const styles = {
         borderRadius: 5,
         boxShadow: '0px 1px 2px #0006',
     },
-    form: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        margin: '20px 0',
-    },
-    input: {
-        width: '80%',
-        marginTop: 0,
-    },
-    button: {
-        padding: '12px 60px',
-    },
     separator: {
         fontFamily: '"Bubblegum Sans", cursive',
         fontSize: 18,
@@ -59,18 +61,10 @@ class MultiPlayerPage extends React.Component {
         code: '',
     }
 
-    handleChange = (event) => {
-        const { value, name } = event.target
-        this.setState({ [name]: value })
-    }
-
-    handleSubmit = () => {
+    handleGameStart = ({ nickname, code, player }) => {
         this.props.history.push({
-            pathname: '/connect/12345678',
-            players: {
-                P1: this.state.nickname,
-                P2: '',
-            },
+            pathname: "/game/",
+            search: `?code=${code}&player=${player}&nickname=${nickname}`
         })
     }
 
@@ -84,44 +78,9 @@ class MultiPlayerPage extends React.Component {
                         src={require('!file-loader!../svg/logo.svg').default}
                         className={classes.logo}
                     />
-                    <form className={classes.form} onSubmit={this.handleSubmit}>
-                        <TextInput
-                            className={classes.input}
-                            name='nickname'
-                            value={this.state.nickname}
-                            label='Nickname'
-                            error={null}
-                            onChange={this.handleChange}
-                            placeholder='John Doe'
-                            autoFocus
-                            required
-                        />
-                        <Button className={classes.button}>
-                            Host a new game
-                        </Button>
-                    </form>
-                    <div className={classes.separator}>
-                        — OR —
-                    </div>
-                    <form className={classes.form}>
-                        <TextInput
-                            className={classes.input}
-                            value={this.state.code}
-                            name='code'
-                            label='Code'
-                            error={null}
-                            onChange={this.handleChange}
-                            placeholder='1234'
-                            required
-                        />
-                        <Button
-                            className={classes.button}
-                            Component={Link}
-                            to='/game'
-                        >
-                            Connect
-                        </Button>
-                    </form>
+                    <MultiPlayerHostForm onGameStart={this.handleGameStart} />
+                    <div className={classes.separator}>— OR —</div>
+                    <MultiPlayerGuestForm onGameStart={this.handleGameStart} />
                 </div>
             </div>
         )

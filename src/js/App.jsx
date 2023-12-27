@@ -45,7 +45,7 @@ class App extends React.Component {
                         <Route exact path='/singleplayer'>
                             <SinglePlayerPage />
                         </Route>
-                        <Route exact path='/game'>
+                        <Route path='/game'>
                             <GamePage />
                         </Route>
                         <Route exact path='/fede'>

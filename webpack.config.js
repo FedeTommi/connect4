@@ -8,7 +8,7 @@ module.exports = {
   mode: "development", //process.env.NODE_ENV || "development",
   devtool: 'source-map',
   plugins: [
-    new HtmlWebpackPlugin({ template: "./index.html" }),
+    new HtmlWebpackPlugin({ template: "./index.html", base: "/" }),
     new FaviconsWebpackPlugin("./src/svg/favicon.svg"),
   ],
   output: {
