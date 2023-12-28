@@ -15,7 +15,6 @@ import GamePage from "./GamePage"
 import FedePlays from "./FedePlays"
 import LogoPopup from "./components/LogoPopup"
 import backgroundPath from "!file-loader!../svg/abstract_background.svg"
-import WaitingPage from "./WaitingPage"
 
 Modal.setAppElement("#react-root")
 
@@ -50,9 +49,6 @@ const App: React.FC<{}> = () => {
 					</Route>
 					<Route exact path="/fede">
 						<FedePlays />
-					</Route>
-					<Route exact path="/connect/:gameCode">
-						<WaitingPage />
 					</Route>
 					<Redirect to="/" />
 				</Switch>
