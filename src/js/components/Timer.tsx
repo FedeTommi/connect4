@@ -1,80 +1,76 @@
-import React from 'react'
-import withStyles from 'react-jss'
+import React from "react"
+import withStyles from "react-jss"
 
-import Hourglass from '../../svg/hourglass.svg'
-
+import Hourglass from "../../svg/hourglass.svg"
 
 const INITIAL_TIMER = 30
 
 const styles = {
-    hourglass: {
-        height: 50,
-    },
-    root: {
-        fontFamily: '"Bubblegum Sans", cursive',
-        fontSize: 20,
-        color: 'black',
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
+	hourglass: {
+		height: 50,
+	},
+	root: {
+		fontFamily: '"Bubblegum Sans", cursive',
+		fontSize: 20,
+		color: "black",
+		display: "flex",
+		flexDirection: "row",
+		alignItems: "center",
+	},
 }
 
 type TimerProps = {
-    classes: Record<string, string>,
-    isPaused: boolean,
-    onTimeOut: () => any,
-    turnCounter: number,
+	classes: Record<string, string>
+	isPaused: boolean
+	onTimeOut: () => any
+	turnCounter: number
 }
 
 type TimerState = {
-    seconds: number,
+	seconds: number
 }
 
 class Timer extends React.Component<TimerProps, TimerState> {
+	intervalHandle: ReturnType<typeof setInterval> | null = null
+	state = { seconds: INITIAL_TIMER }
 
-    intervalHandle: ReturnType<typeof setInterval> | null = null
-    state = { seconds: INITIAL_TIMER }
+	componentDidMount() {
+		this.intervalHandle = setInterval(() => {
+			const { seconds } = this.state
+			if (seconds === 0) {
+				this.setState({ seconds: INITIAL_TIMER })
+				this.props.onTimeOut()
+				return
+			}
+			if (this.props.isPaused === true) {
+				return
+			}
 
-    componentDidMount() {
-        this.intervalHandle = setInterval(() => {
-            const { seconds } = this.state
-            if (seconds === 0) {
-                this.setState({ seconds: INITIAL_TIMER })
-                this.props.onTimeOut()
-                return
-            }
-            if (this.props.isPaused === true) {
-                return
-            }
+			this.setState({ seconds: seconds - 1 })
+		}, 1000)
+	}
 
-            this.setState({ seconds: seconds - 1 })
+	componentDidUpdate(prevProps: TimerProps) {
+		if (this.props.turnCounter !== prevProps.turnCounter) {
+			this.setState({ seconds: INITIAL_TIMER })
+		}
+	}
 
-        }, 1000)
-    }
+	componentWillUnmount() {
+		clearInterval(this.intervalHandle!)
+	}
 
-    componentDidUpdate(prevProps: TimerProps) {
-        if (this.props.turnCounter !== prevProps.turnCounter) {
-            this.setState({ seconds: INITIAL_TIMER })
-        }
-    }
+	render() {
+		const { classes } = this.props
+		const { seconds } = this.state
 
-    componentWillUnmount() {
-        clearInterval(this.intervalHandle!)
-    }
-
-    render() {
-        const { classes } = this.props
-        const { seconds } = this.state
-
-        return (
-            <div className={classes.root}>
-                <Hourglass className={classes.hourglass} />
-                <div>{seconds} s</div>
-            </div>
-        )
-    }
-
+		return (
+			<div className={classes.root}>
+				<Hourglass className={classes.hourglass} />
+				<div>{seconds} s</div>
+			</div>
+		)
+	}
 }
 
 export default withStyles(styles)(Timer)
