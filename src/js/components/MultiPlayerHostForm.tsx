@@ -26,7 +26,7 @@ const MultiPlayerHostForm = ({ onGameStart }: MultiPlayerHostFormProps) => {
 	const handleSubmit = async (event: FormEvent) => {
 		event.preventDefault()
 		setIsLoading(true)
-		const result = await fetch("http://127.0.0.1:1234/new-game", {
+		const result = await fetch("/api/new-game", {
 			method: "POST",
 			body: JSON.stringify({ nickname }),
 		}).then((res) => res.json())

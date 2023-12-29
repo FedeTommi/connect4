@@ -30,10 +30,9 @@ const MultiPlayerGuestForm = ({ onGameStart }: MultiPlayerGuestFormProps) => {
 		event.preventDefault()
 		setIsLoading(true)
 		setError(null)
-		// TODO: DO this better Freddy
-		const result = await fetch(
-			`http://127.0.0.1:1234/game-exists/?code=${state.code}`,
-		).then((res) => res.json())
+		const result = await fetch(`/api/game-exists/?code=${state.code}`).then(
+			(res) => res.json(),
+		)
 		console.log(result)
 		if (result.roomExists) {
 			onGameStart({ code: state.code, nickname: state.nickname, player: "P2" })

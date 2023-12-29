@@ -52,21 +52,15 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './index.html'))
 })
 
-app.get('/game-exists', (req, res) => {
-    // TODO: Remove this when we're no longer using the webpack devserver
-    res.setHeader("Access-Control-Allow-Origin", "*")
-    res.setHeader("Access-Control-Allow-Methods", "*")
-    res.setHeader("Access-Control-Allow-Headers", "*")
-    const code = req.query?.code as string
-    res.json({ gameExists: code in games })
+app.get("/api/game-exists", (req, res) => {
+	const code = req.query?.code as string
+	res.json({ gameExists: code in games })
 })
 
-app.post('/new-game', (req, res) => {
-    const code = generateCode()
-    res.setHeader("Access-Control-Allow-Origin", "*")
-    res.setHeader("Access-Control-Allow-Methods", "*")
-    res.setHeader("Access-Control-Allow-Headers", "*")
-    res.json({code})
+app.post("/api/new-game", (req, res) => {
+	const code = generateCode()
+	games[code] = {}
+	res.json({ code })
 })
 
 server.listen(port)
