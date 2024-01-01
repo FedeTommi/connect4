@@ -56,13 +56,15 @@ const useStyles = createUseStyles({
 	radioGroup: {
 		display: "flex",
 		flexDirection: "row",
-		justifyContent: "space-between",
+		gap: "20px",
 		width: "80%",
 		marginBottom: 20,
 	},
 
 	easy: {
-		background: "#86e2fdff",
+		"&:has(> input:checked)": {
+			background: "#86e2fdff",
+		},
 	},
 
 	easyTriangle: {
@@ -70,7 +72,9 @@ const useStyles = createUseStyles({
 	},
 
 	medium: {
-		background: "#9cfd7aff",
+		"&:has(> input:checked)": {
+			background: "#9cfd7aff",
+		},
 	},
 
 	mediumTriangle: {
@@ -78,7 +82,9 @@ const useStyles = createUseStyles({
 	},
 
 	hard: {
-		background: "#fca100ff",
+		"&:has(> input:checked)": {
+			background: "#fca100ff",
+		},
 	},
 
 	hardTriangle: {
@@ -130,18 +136,22 @@ const SinglePlayerPage: React.FC<{}> = () => {
 						<Radiobutton
 							className={classes.easy}
 							classes={{ triangle: classes.easyTriangle }}
+							name="difficulty"
+							defaultChecked={true}
 						>
 							Easy
 						</Radiobutton>
 						<Radiobutton
 							className={classes.medium}
 							classes={{ triangle: classes.mediumTriangle }}
+							name="difficulty"
 						>
 							Medium
 						</Radiobutton>
 						<Radiobutton
 							className={classes.hard}
 							classes={{ triangle: classes.hardTriangle }}
+							name="difficulty"
 						>
 							Hard
 						</Radiobutton>

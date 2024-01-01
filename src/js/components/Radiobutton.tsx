@@ -7,6 +7,7 @@ const useStyles = createUseStyles({
 	root: {
 		background: "grey", //#fea #E7B55F #c87137
 		borderRadius: 5,
+		width: "100%",
 		color: "#eee",
 		outline: "none",
 		border: "none",
@@ -38,25 +39,41 @@ const useStyles = createUseStyles({
 		background: "#a3a3a3", //#E7B55F #c87137 #A05A2C
 		clipPath: "polygon(100% 0, 0 100%, 100% 100%)",
 	},
+	radio: {
+		opacity: 0,
+		position: "absolute",
+		"&:not(:checked) ~div": {
+			background: "#a3a3a3",
+		},
+	},
 })
 
-type RadioButton = {
+type RadioButtonProps = {
 	classes: Record<string, string>
 	children: React.ReactNode
 	className: string
+	name: string
+	defaultChecked?: boolean
 }
 
-const Radiobutton: React.FC<RadioButton> = ({
+const Radiobutton: React.FC<RadioButtonProps> = ({
 	classes: givenClasses = {},
 	children,
 	className,
+	name,
+	defaultChecked,
 	...rest
 }) => {
 	const classes = useStyles()
 
 	return (
 		<label className={classNames(classes.root, className)} {...rest}>
-			<input type="radio" />
+			<input
+				type="radio"
+				className={classes.radio}
+				name={name}
+				defaultChecked={defaultChecked}
+			/>
 			<div className={classNames(classes.triangle, givenClasses.triangle)} />
 			{children}
 		</label>
