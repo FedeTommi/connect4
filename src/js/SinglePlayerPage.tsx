@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom"
 import Button from "./components/Button"
 import Radiobutton from "./components/Radiobutton"
 import TextInput from "./components/TextInput"
+import ArrowBack from "./components/ArrowBack"
 
 const useStyles = createUseStyles({
 	root: {
@@ -13,6 +14,7 @@ const useStyles = createUseStyles({
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "center",
+		position: "relative",
 	},
 
 	wrapper: {
@@ -105,6 +107,7 @@ const SinglePlayerPage: React.FC<{}> = () => {
 
 	return (
 		<div className={classes.root}>
+			<ArrowBack />
 			<div className={classes.wrapper}>
 				<img
 					src={require("!file-loader!../svg/logo.svg").default}

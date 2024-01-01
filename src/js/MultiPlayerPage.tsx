@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom"
 import { createUseStyles } from "react-jss"
 import MultiPlayerGuestForm from "./components/MultiPlayerGuestForm"
 import MultiPlayerHostForm from "./components/MultiPlayerHostForm"
+import ArrowBack from "./components/ArrowBack"
 
 export const useStyles = createUseStyles({
 	form: {
@@ -24,6 +25,7 @@ export const useStyles = createUseStyles({
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "center",
+		position: "relative",
 	},
 	logo: {
 		width: "100%",
@@ -76,6 +78,7 @@ const MultiPlayerPage: React.FC<{}> = () => {
 
 	return (
 		<div className={classes.root}>
+			<ArrowBack />
 			<div className={classes.wrapper}>
 				<img
 					src={require("!file-loader!../svg/logo.svg").default}
