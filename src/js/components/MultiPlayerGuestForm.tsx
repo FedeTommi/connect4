@@ -2,6 +2,7 @@ import React, { FormEvent, useState } from "react"
 import { useStyles } from "../MultiPlayerPage"
 import Button from "./Button"
 import TextInput from "./TextInput"
+import { GameExistsResponse } from "../../.."
 
 type MultiPlayerGuestFormProps = {
 	onGameStart: ({
@@ -30,17 +31,16 @@ const MultiPlayerGuestForm = ({ onGameStart }: MultiPlayerGuestFormProps) => {
 		event.preventDefault()
 		setIsLoading(true)
 		setError(null)
-		const result = await fetch(`/api/game-exists/?code=${state.code}`).then(
+		const result = (await fetch(`/api/game-exists/?code=${state.code}`).then(
 			(res) => res.json(),
-		)
-		console.log(result)
-		if (result.roomExists) {
+		)) as GameExistsResponse
+		setIsLoading(false)
+		console.log("result", result)
+		if (result.gameExists) {
 			onGameStart({ code: state.code, nickname: state.nickname, player: "P2" })
 		} else setError(`The room "${state.code}" does not exist.`)
-		setIsLoading(false)
 	}
 
-	console.log(state)
 	return (
 		<form className={classes.form} onSubmit={handleSubmit}>
 			<TextInput

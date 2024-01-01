@@ -1,8 +1,6 @@
 import React from "react"
 import { createUseStyles } from "react-jss"
 
-import { NUM_ROWS } from "./GameConstants"
-
 const useStyles = createUseStyles({
 	root: {
 		height: 0,

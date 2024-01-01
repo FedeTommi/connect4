@@ -13,6 +13,7 @@ import { NUM_COLUMNS, NUM_ROWS, PLAYERS } from "./GameConstants"
 import { Grid, WinSequences } from "./GameLogic"
 import Star from "../svg/star.svg"
 import Boop from "./components/Boop"
+import { GameMode } from "./GamePage"
 
 const styles = {
 	background: {
@@ -165,9 +166,11 @@ const winModalStyles = {
 }
 
 type GameProps = {
+	player: "P1" | "P2"
 	players: { P1: string; P2: string }
 	onPlaceToken: (x: number) => any
-	multiplayerCode: string | null
+	gameMode: GameMode
+	tokenPlaced: { i: number; x: number }
 	classes: Record<string, string>
 }
 
@@ -229,12 +232,12 @@ class Game extends React.Component<GameProps, GameState> {
 	}
 
 	handleClick = (x: number) => () => {
-		if (this.activePlayer === "P2") {
+		if (this.activePlayer !== this.props.player) {
 			return
 		}
 		this.placeTokenAtX(x)
 
-		if (this.props.multiplayerCode) {
+		if (this.props.gameMode === "private_multiplayer") {
 			this.props.onPlaceToken(x)
 		} else {
 			setTimeout(this.robMove, 2000)
@@ -287,6 +290,7 @@ class Game extends React.Component<GameProps, GameState> {
 		const randomX =
 			nonFullColumns[Math.floor(Math.random() * nonFullColumns.length)].i
 		this.placeTokenAtX(randomX)
+		return randomX
 	}
 
 	handleNewGame = () => {
@@ -294,9 +298,21 @@ class Game extends React.Component<GameProps, GameState> {
 	}
 
 	handleTimeout = () => {
-		this.placeRandomToken()
+		const x = this.placeRandomToken()
 
-		setTimeout(this.robMove, 2000)
+		if (this.props.gameMode === "private_multiplayer") {
+			this.props.onPlaceToken(x)
+		} else {
+			setTimeout(this.robMove, 2000)
+		}
+	}
+
+	componentDidUpdate(prevProps: Readonly<GameProps>) {
+		const tokenPlaced = this.props.tokenPlaced
+		console.log(this.props, prevProps)
+		if (tokenPlaced.i >= 0 && tokenPlaced.i !== prevProps.tokenPlaced.i) {
+			this.placeTokenAtX(tokenPlaced.x)
+		}
 	}
 
 	render() {
@@ -326,7 +342,10 @@ class Game extends React.Component<GameProps, GameState> {
 					<div className={classes.winModalHeader}>
 						{players[winningPlayerID!]} won
 						<Boop rotation={20} timing={200}>
+							{/* TODO sad token if lost */}
+							{winningPlayerID! === this.props.player && (
 								<Star className={classes.star} />
+							)}
 						</Boop>
 					</div>
 					<div className={classes.winModalScores}>
