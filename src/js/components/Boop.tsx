@@ -1,52 +1,68 @@
-import React, { useEffect, useState } from "react"
-import PropTypes from "prop-types"
+import React, { ReactNode } from "react"
 import { useSpring, animated } from "react-spring"
+// UPDATE this path to your copy of the hook!
+// Source here: https://joshwcomeau.com/snippets/react-hooks/use-prefers-reduced-motion
 
-type BoopProps = {
-	x: number
-	y: number
-	rotation: number
-	scale: number
-	timing: number
-	children: React.ReactNode
+type BoopConfig = {
+	x?: number
+	y?: number
+	rotation?: number
+	scale?: number
+	timing?: number
+	springConfig?: {
+		tension?: number
+		friction?: number
+	}
 }
-const Boop = ({
+
+function useBoop({
 	x = 0,
 	y = 0,
 	rotation = 0,
 	scale = 1,
 	timing = 150,
-	children,
-}: BoopProps) => {
-	const [isBooped, setIsBooped] = useState(false)
-
+	springConfig = {
+		tension: 300,
+		friction: 10,
+	},
+}: BoopConfig) {
+	// const prefersReducedMotion = usePrefersReducedMotion()
+	const [isBooped, setIsBooped] = React.useState(false)
 	const style = useSpring({
-		display: "inline-block",
-		backfaceVisibility: "hidden",
 		transform: isBooped
 			? `translate(${x}px, ${y}px)
-               rotate(${rotation}deg)
-               scale(${scale})`
+         rotate(${rotation}deg)
+         scale(${scale})`
 			: `translate(0px, 0px)
-               rotate(0deg)
-               scale(1)`,
-		config: {
-			tension: 200,
-			friction: 5,
-		},
+         rotate(0deg)
+         scale(1)`,
+		config: springConfig,
 	})
-
-	useEffect(() => {
-		if (!isBooped) return
-
-		const timeoutId = setTimeout(() => {
+	React.useEffect(() => {
+		if (!isBooped) {
+			return
+		}
+		const timeoutId = window.setTimeout(() => {
 			setIsBooped(false)
 		}, timing)
+		return () => {
+			window.clearTimeout(timeoutId)
+		}
+	}, [isBooped])
+	const trigger = React.useCallback(() => {
+		setIsBooped(true)
+	}, [])
+	// let appliedStyle = prefersReducedMotion ? {} : style
+	let appliedStyle = style
+	return { style: appliedStyle, trigger }
+}
 
-		return () => clearTimeout(timeoutId)
-	}, [isBooped, timing])
+type BoopProps = BoopConfig & {
+	children: ReactNode
+}
 
-	const trigger = () => setIsBooped(true)
+const Boop: React.FC<BoopProps> = ({ children, ...boopConfig }) => {
+	const { style, trigger } = useBoop(boopConfig)
 
 	return (
 		<animated.span onMouseEnter={trigger} style={style}>
@@ -54,14 +70,4 @@ const Boop = ({
 		</animated.span>
 	)
 }
-
-Boop.propTypes = {
-	x: PropTypes.number,
-	y: PropTypes.number,
-	rotation: PropTypes.number,
-	scale: PropTypes.number,
-	timing: PropTypes.number,
-	children: PropTypes.node.isRequired,
-}
-
 export default Boop

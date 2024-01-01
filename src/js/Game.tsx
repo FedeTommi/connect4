@@ -11,6 +11,8 @@ import Timer from "./components/Timer"
 import Logo from "../svg/logo.svg"
 import { NUM_COLUMNS, NUM_ROWS, PLAYERS } from "./GameConstants"
 import { Grid, WinSequences } from "./GameLogic"
+import Star from "../svg/star.svg"
+import Boop from "./components/Boop"
 
 const styles = {
 	background: {
@@ -65,12 +67,18 @@ const styles = {
 		fontSize: 30,
 		cursor: "text",
 		fontFamily: "Bubblegum Sans",
+		gap: "5px",
 	},
 	winModalScores: {
 		fontSize: 20,
 		cursor: "text",
 		fontFamily: "Bubblegum Sans",
 		textAlign: "center",
+		display: "flex",
+		gap: "10px",
+		flexDirection: "row",
+		alignItems: "baseline",
+		justifyContent: "center",
 	},
 	turnField: {
 		background: "white",
@@ -104,6 +112,19 @@ const styles = {
 	activePlayer: {
 		outline: "5px solid #b0e0df",
 	},
+	score: {
+		width: "40%",
+	},
+	scoreLeft: {
+		textAlign: "end",
+	},
+	scoreRight: {
+		textAlign: "start",
+	},
+	star: {
+		width: 40,
+		height: 40,
+	},
 }
 
 const pauseModalStyles = {
@@ -130,6 +151,7 @@ const winModalStyles = {
 		flexDirection: "column",
 		position: "relative",
 		inset: 0,
+		alignSelf: "center",
 	} satisfies CSSProperties,
 	overlay: {
 		// background: 'var(--tiffany-extra-dark)',
@@ -303,9 +325,18 @@ class Game extends React.Component<GameProps, GameState> {
 				>
 					<div className={classes.winModalHeader}>
 						{players[winningPlayerID!]} won
+						<Boop rotation={20} timing={200}>
+								<Star className={classes.star} />
+						</Boop>
 					</div>
 					<div className={classes.winModalScores}>
-						{players.P1} {scores.P1} : {scores.P2} {players.P2}
+						<div className={classNames(classes.score, classes.scoreLeft)}>
+							{players.P1} {scores.P1}
+						</div>
+						<div>:</div>
+						<div className={classNames(classes.score, classes.scoreRight)}>
+							{scores.P2} {players.P2}
+						</div>
 					</div>
 					<Button className={classes.button} onClick={this.handleNewGame}>
 						Play again
