@@ -25,6 +25,7 @@ const useStyles = createUseStyles({
 	},
 	logo: {
 		height: "75%",
+		maxWidth: "100%",
 	},
 	buttonBox: {
 		display: "flex",
