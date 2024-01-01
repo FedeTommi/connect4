@@ -16,6 +16,13 @@ const styles = {
 		display: "flex",
 		flexDirection: "row",
 		alignItems: "center",
+		width: 75,
+	},
+	secondsLeft: {
+		width: 35,
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "space-between",
 	},
 }
 
@@ -67,7 +74,10 @@ class Timer extends React.Component<TimerProps, TimerState> {
 		return (
 			<div className={classes.root}>
 				<Hourglass className={classes.hourglass} />
-				<div>{seconds} s</div>
+				<div className={classes.secondsLeft}>
+					<div>{seconds}</div>
+					<div>s</div>
+				</div>
 			</div>
 		)
 	}
