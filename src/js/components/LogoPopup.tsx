@@ -66,19 +66,14 @@ const LogoPopup = () => {
 				<div className={classes.textInModal}>Created by:</div>
 				<a
 					className={classes.nameLinkedid}
-					href="http://linkedin.com/in/marcel-robitaille"
+					href="https://portfolio.marcelrobitaille.me/"
 				>
-					Marcellino
+					Marcel
 				</a>
 				<div className={classes.textInModal}>&</div>
-				<Link
-					className={classes.nameLinkedid}
-					to="/fede"
-					// Fede's linkedin:
-					// href='http://www.linkedin.com/in/federica-tomola-44124a184/'>
-				>
-					Federchicca
-				</Link>
+				<a className={classes.nameLinkedid} href="https://www.fedetommi.eu/">
+					FedeTommi
+				</a>
 			</Modal>
 		</Fragment>
 	)
