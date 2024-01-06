@@ -2,9 +2,9 @@ import React from "react"
 import { createUseStyles } from "react-jss"
 import {
 	BrowserRouter as Router,
-	Switch,
+	Routes,
 	Route,
-	Redirect,
+	Navigate,
 } from "react-router-dom"
 import Modal from "react-modal"
 
@@ -34,24 +34,13 @@ const App: React.FC<{}> = () => {
 		<div className={classes.background}>
 			<Router>
 				<LogoPopup />
-				<Switch>
-					<Route exact path="/">
-						<LandingPage />
-					</Route>
-					<Route exact path="/multiplayer">
-						<MultiPlayerPage />
-					</Route>
-					<Route exact path="/singleplayer">
-						<SinglePlayerPage />
-					</Route>
-					<Route path="/game">
-						<GamePage />
-					</Route>
-					<Route exact path="/fede">
-						<FedePlays />
-					</Route>
-					<Redirect to="/" />
-				</Switch>
+				<Routes>
+					<Route path="/" element={<LandingPage />} />
+					<Route path="/multiplayer" element={<MultiPlayerPage />} />
+					<Route path="/singleplayer" element={<SinglePlayerPage />} />
+					<Route path="/game" element={<GamePage />} />
+				</Routes>
+				<Navigate to="/" />
 			</Router>
 		</div>
 	)
