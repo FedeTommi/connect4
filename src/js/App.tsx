@@ -12,7 +12,6 @@ import LandingPage from "./LandingPage"
 import MultiPlayerPage from "./MultiPlayerPage"
 import SinglePlayerPage from "./SinglePlayerPage"
 import GamePage from "./GamePage"
-import FedePlays from "./FedePlays"
 import LogoPopup from "./components/LogoPopup"
 import backgroundPath from "!file-loader!../svg/abstract_background.svg"
 
@@ -39,8 +38,8 @@ const App: React.FC<{}> = () => {
 					<Route path="/multiplayer" element={<MultiPlayerPage />} />
 					<Route path="/singleplayer" element={<SinglePlayerPage />} />
 					<Route path="/game" element={<GamePage />} />
+					<Route path="/*" element={<Navigate to="/" />} />
 				</Routes>
-				<Navigate to="/" />
 			</Router>
 		</div>
 	)

@@ -50,12 +50,12 @@ const useStyles = createUseStyles({
 		borderTop: `var(--tiffany) ${GRID_PADDING}px solid`,
 		borderBottom: `var(--tiffany) ${GRID_PADDING}px solid`,
 
-		"&:hover": {
+		"&:hover, &:focus": {
 			borderTop: `var(--tiffany-hover) ${GRID_PADDING}px solid`,
 			borderBottom: `var(--tiffany-hover) ${GRID_PADDING}px solid`,
 		},
 
-		"&:hover $cell": {
+		"&:hover $cell, &:focus $cell": {
 			background:
 				"-webkit-radial-gradient(50% 50%, circle, transparent 57%, var(--tiffany-hover) 57%)",
 		},

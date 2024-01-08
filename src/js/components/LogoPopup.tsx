@@ -12,6 +12,11 @@ const useStyles = createUseStyles({
 		left: 10,
 		bottom: 10,
 		cursor: "pointer",
+		outline: "none",
+		border: "none",
+		"&:focus #outline, &:focus-visible #outline": {
+			fill: "#155755",
+		},
 	},
 	nameLinkedid: {
 		fontFamily: '"Bubblegum Sans", cursive',
@@ -54,10 +59,19 @@ const LogoPopup = () => {
 
 	const open = useCallback(() => setIsOpen(true), [])
 	const close = useCallback(() => setIsOpen(false), [])
+	const toggle = useCallback(
+		() => (isOpen ? setIsOpen(false) : setIsOpen(true)),
+		[],
+	)
 
 	return (
 		<Fragment>
-			<MFLogo className={classes.maplePizza} onClick={open} />
+			<MFLogo
+				className={classes.maplePizza}
+				onClick={open}
+				onKeyDown={(e) => (e.key === "Enter" ? toggle() : {})}
+				tabIndex={0}
+			/>
 			<Modal
 				isOpen={isOpen}
 				style={{ overlay: modalOverlayStyles, content: modalContentStyles }}

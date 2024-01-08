@@ -43,17 +43,28 @@ type ButtonProps = {
 	children: React.ReactNode
 	className?: string
 	[x: string]: any
+	onMouseEnter?: () => void
+	onMouseLeave?: () => void
 }
 const Button = ({
 	Component = "button",
 	children,
 	className,
+	onMouseEnter,
+	onMouseLeave,
 	...rest
 }: ButtonProps) => {
 	const classes = useStyles()
 
 	return (
-		<Component className={`${classes.root} ${className}`} {...rest}>
+		<Component
+			className={`${classes.root} ${className}`}
+			{...rest}
+			onMouseEnter={onMouseEnter}
+			onMouseLeave={onMouseLeave}
+			onFocus={onMouseEnter}
+			onBlur={onMouseLeave}
+		>
 			<div className={classes.triangle} />
 			{children}
 		</Component>

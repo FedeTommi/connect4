@@ -1,6 +1,6 @@
 import React from "react"
 import { createUseStyles } from "react-jss"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import ArrowBackIcon from "../../svg/arrow-back.svg"
 
@@ -12,15 +12,24 @@ const useStyles = createUseStyles({
 		width: 90,
 		height: 90,
 		cursor: "pointer",
+		outline: "none",
+		border: "none",
+		"&:focus > path:first-child, &:focus-visible > path:first-child": {
+			fill: "#155755",
+		},
 	},
 })
 
 const ArrowBack: React.FC<{}> = () => {
 	const classes = useStyles()
-	const history = useHistory()
+	const navigate = useNavigate()
 
 	return (
-		<ArrowBackIcon className={classes.back} onClick={() => history.goBack()} />
+		<ArrowBackIcon
+			className={classes.back}
+			tabIndex={0}
+			onClick={() => navigate(-1)}
+		/>
 	)
 }
 

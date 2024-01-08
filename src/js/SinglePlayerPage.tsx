@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react"
 import { createUseStyles } from "react-jss"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import Button from "./components/Button"
 import Radiobutton from "./components/Radiobutton"
@@ -59,6 +59,10 @@ const useStyles = createUseStyles({
 		gap: "20px",
 		width: "80%",
 		marginBottom: 20,
+		"&:focus-within label": {
+			// outline: "1px solid black",
+			textDecoration: "underline",
+		},
 	},
 
 	easy: {
@@ -95,10 +99,10 @@ const useStyles = createUseStyles({
 const SinglePlayerPage: React.FC<{}> = () => {
 	const [nickname, setNickname] = useState("")
 	const classes = useStyles()
-	const history = useHistory()
+	const navigate = useNavigate()
 
 	const handleSubmit = useCallback(() => {
-		history.push({
+		navigate({
 			pathname: "/game/",
 			search: `?player=P1&nickname=${nickname}`,
 		})

@@ -1,11 +1,10 @@
-- show whose turn it is
-- make click impossible during other player's turn
+- sad token if lost / star with boop when won
+- move logic of game to server
+- add bouncing text for connect4 logo (at random times)
+- no animation for prefersReducedMotion 
+- maple-pizza logo stays with focus style when in modal
+- add frontend for "Establishing connection to server..."
 Timer
--> time goes down from 30 to 0 s then a token is put in a random place
 - add animation:
     - sand goes down in top, goes up in bottom
     - when resets the hourglass turns 180°
-Single player: 
-- Rob plays its turn
-LandingPage:
-- Animation of smileys on hover (flip gently from side to side / bounce)

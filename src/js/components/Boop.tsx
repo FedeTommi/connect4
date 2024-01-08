@@ -13,9 +13,10 @@ type BoopConfig = {
 		tension?: number
 		friction?: number
 	}
+	delay?: number
 }
 
-function useBoop({
+export function useBoop({
 	x = 0,
 	y = 0,
 	rotation = 0,
@@ -25,18 +26,31 @@ function useBoop({
 		tension: 300,
 		friction: 10,
 	},
+	delay = 0,
 }: BoopConfig) {
 	// const prefersReducedMotion = usePrefersReducedMotion()
 	const [isBooped, setIsBooped] = React.useState(false)
 	const style = useSpring({
-		transform: isBooped
-			? `translate(${x}px, ${y}px)
-         rotate(${rotation}deg)
-         scale(${scale})`
-			: `translate(0px, 0px)
-         rotate(0deg)
-         scale(1)`,
+		from: {
+			transform: isBooped
+				? `translate(0px, 0px)
+			rotate(0deg)
+			scale(1)`
+				: `translate(${x}px, ${y}px)
+			rotate(${rotation}deg)
+			scale(${scale})`,
+		},
+		to: {
+			transform: isBooped
+				? `translate(${x}px, ${y}px)
+			rotate(${rotation}deg)
+			scale(${scale})`
+				: `translate(0px, 0px)
+			rotate(0deg)
+			scale(1)`,
+		},
 		config: springConfig,
+		delay: delay,
 	})
 	React.useEffect(() => {
 		if (!isBooped) {

@@ -25,7 +25,7 @@ const useStyles = createUseStyles({
 		"&:hover": {
 			transform: "scale(1.05)",
 		},
-		"&:focus": {
+		"&:focus, &:focus-visible": {
 			textDecoration: "underline",
 		},
 	},

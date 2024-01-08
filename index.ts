@@ -7,7 +7,7 @@ import { Server as WebSocketServer, WebSocket } from "ws"
 const port = 1234
 const app = express()
 const server = http.createServer(app)
-const wss = new WebSocketServer({ server: server })
+const wss = new WebSocketServer({ server: server, path: "/ws" })
 
 export type MessageConnect = {
 	event: "connect"
@@ -109,8 +109,10 @@ wss.on("connection", (ws) => {
 	})
 })
 
-app.get("/", (req, res) => {
-	res.sendFile(path.join(__dirname, "./index.html"))
+app.use(express.static(path.join(__dirname, "/dist/")))
+
+app.get(["/game", "/singleplayer", "/multiplayer"], (req, res) => {
+	res.sendFile(path.join(__dirname, "/dist/index.html"))
 })
 
 export type GameExistsResponse = { gameExists: boolean }
@@ -127,4 +129,5 @@ app.post("/api/new-game", (req, res) => {
 	res.json({ code })
 })
 
-server.listen(port)
+console.log("Listening on port", port)
+server.listen(port, "0.0.0.0")

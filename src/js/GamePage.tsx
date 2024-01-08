@@ -1,12 +1,38 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { useLocation, Redirect } from "react-router-dom"
+import React, {
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+	CSSProperties,
+} from "react"
+import { useLocation, Navigate } from "react-router-dom"
+import Modal from "react-modal"
 
 import Game from "./Game"
+import Message from "./components/Message"
 import {
 	MessageConnect,
 	MessageOpponentConnected,
 	MessageTokenPlaced,
 } from "../.."
+
+const connectingModalStyles = {
+	content: {
+		display: "flex",
+		flexDirection: "column",
+		position: "relative",
+		inset: 0,
+		padding: "20px 80px",
+	} satisfies CSSProperties,
+	overlay: {
+		background: "#0004",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		zIndex: 1,
+	} satisfies CSSProperties,
+}
 
 const parseUrlState = () => {
 	const location = useLocation()
@@ -63,7 +89,9 @@ const GamePage: React.FC<{}> = () => {
 			return
 		}
 
-		const websocket = new WebSocket("ws://127.0.0.1:1234")
+		console.log(`ws://${location.host}/ws`)
+		const protocol = location.protocol == "https:" ? "wss" : "ws"
+		const websocket = new WebSocket(`${protocol}://${location.host}/ws`)
 		wsRef.current = websocket
 
 		websocket.onopen = () => {
@@ -129,14 +157,22 @@ const GamePage: React.FC<{}> = () => {
 		)
 	}, [])
 
-	if (!isValid) return <Redirect to="/" />
+	if (!isValid) return <Navigate to="/" />
 
 	if (connectionState == "not_connected") {
-		return "Establishing connection to server..."
+		return (
+			<Modal isOpen={true} style={connectingModalStyles}>
+				<div>Establishing connection to server...</div>
+			</Modal>
+		)
 	}
 
 	if (connectionState == "opponent_not_connected") {
-		return `Waiting for opponent to connect. Give them this code: ${multiplayerCode}`
+		return (
+			<Modal isOpen={true} style={connectingModalStyles}>
+				<div>{`Waiting for opponent to connect. Give them this code: ${multiplayerCode}`}</div>
+			</Modal>
+		)
 	}
 
 	const players =

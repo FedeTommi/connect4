@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { createUseStyles } from "react-jss"
 import MultiPlayerGuestForm from "./components/MultiPlayerGuestForm"
 import MultiPlayerHostForm from "./components/MultiPlayerHostForm"
@@ -54,7 +54,7 @@ export const useStyles = createUseStyles({
 
 const MultiPlayerPage: React.FC<{}> = () => {
 	const classes = useStyles()
-	const history = useHistory()
+	const navigate = useNavigate()
 
 	const [state, setState] = useState({
 		nickname: "",
@@ -70,7 +70,7 @@ const MultiPlayerPage: React.FC<{}> = () => {
 		code: string
 		player: string
 	}) => {
-		history.push({
+		navigate({
 			pathname: "/game/",
 			search: `?code=${code}&player=${player}&nickname=${nickname}`,
 		})
